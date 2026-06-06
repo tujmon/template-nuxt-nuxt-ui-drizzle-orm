@@ -1,0 +1,32 @@
+# Nuxt 3 and Node
+node_modules/
+.nuxt/
+.output/
+dist/
+
+# Env files
+.env
+.env.*
+!.env.example
+
+# Logs and system
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# IDE and tool configs
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Fallow local cache
+.fallow/
+
+# Local database files
+*.db
+*.sqlite
