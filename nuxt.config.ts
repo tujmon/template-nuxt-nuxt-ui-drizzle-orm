@@ -6,6 +6,9 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/eslint'
   ],
+  css: [
+    '~/assets/css/main.css'
+  ],
   runtimeConfig: {
     // Keys within public are also exposed client-side
     public: {
