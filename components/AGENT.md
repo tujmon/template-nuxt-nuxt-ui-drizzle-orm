@@ -15,16 +15,18 @@ Este diretório contém os componentes reutilizáveis da interface visual.
 
 ## Padrões de Estilo & Layout
 
-Para manter a consistência estética e premium do template:
+Para manter o template flexível e customizável:
 
 ### 1. Uso do Nuxt UI e Tailwind CSS
-- Prefira a utilização dos componentes built-in do **Nuxt UI** (ex: `<UButton>`, `<UInput>`, `<UCard>`, `<UModal>`). Eles já possuem integrações nativas de acessibilidade, transições e classes utilitárias de cores configuradas.
-- Utilize classes utilitárias do **Tailwind CSS** para customizações de grid, flexbox, espaçamento, tipografia e bordas. Evite estilos ad-hoc em tags `<style>` ou CSS puro.
+- Prefira a utilização dos componentes do **Nuxt UI** (ex: `<UButton>`, `<UInput>`). Eles possuem suporte integrado para customização dinâmica de temas.
+- Utilize as classes utilitárias do **Tailwind CSS** para estruturas de layout (grid, flexbox, espaçamento). Evite estilos embutidos em tags `<style>` para manter a facilidade de customização do tema global.
 
-### 2. Paleta de Cores e Temas
-- **Tema Escuro (Dark Mode)**: O template utiliza fundo escuro padrão (`bg-slate-950` ou `bg-slate-900/50`) e textos contrastantes em tons claros (`text-slate-100` e `text-slate-400`). Ao criar componentes, use variações semânticas de cinzas para divisões e borders (`border-slate-800`).
-- **Cores de Destaque**: O padrão utiliza `emerald`, `teal` e `indigo` para gradientes de títulos (`from-emerald-400 to-indigo-500`) e botões primários. Evite introduzir novas cores chamativas sem necessidade.
+### 2. Customização do Tema (Sem Cores Fixas)
+- **Cores Semânticas**: Ao construir componentes, utilize cores semânticas padrão do Nuxt UI (ex: `color="primary"` ou `color="gray"`) em vez de cores estáticas específicas como `emerald` ou `slate`. Isso garante que as cores dos botões e painéis mudem automaticamente quando o tema do projeto for alterado.
+- **Configurando o Tema**: O desenvolvedor final pode redefinir o tema padrão do Nuxt UI alterando a propriedade `ui` no arquivo `app.config.ts` ou estendendo a paleta de cores no `tailwind.config.js` do projeto.
 
-### 3. Glassmorphism e Efeitos Modernos
-- Para modais, popups ou cards flutuantes, utilize o efeito de vidro fosco: `bg-slate-900/60 backdrop-blur-md border border-slate-800` para garantir aspecto premium.
+### 3. Adaptação a Temas Claros/Escuros
+- Escreva componentes preparados para alternar entre Dark Mode e Light Mode utilizando os prefixos do Tailwind (ex: `bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50`).
+- Mantenha as bordas e fundos flexíveis usando classes neutras (ex: `border-gray-200 dark:border-gray-800`).
+
 
