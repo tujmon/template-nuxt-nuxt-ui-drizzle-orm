@@ -1,23 +1,27 @@
-# Integration Testing Conventions
+# Testing Conventions
 
-Este diretório contém os testes automatizados da aplicação, focando principalmente em **Testes de Integração** utilizando **Vitest** e **@nuxt/test-utils**.
+Este diretório contém os testes automatizados da aplicação usando **Vitest**, PostgreSQL real e **@nuxt/test-utils/e2e** para rotas HTTP.
 
 ## Scripts de Teste
 - **Executar testes**: `npm run test` (executa os testes em modo "run single time").
 - **Executar testes em modo Watch**: `npx vitest` (executa e escuta modificações nos arquivos).
 
-## Padrão para Criação de Testes de Integração
+## Ambiente
+- O Vitest carrega `.env.test` automaticamente via [vitest.config.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/vitest.config.ts).
+- `.env.test` usa `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/db`.
+- Suba o banco de teste com `POSTGRES_PORT=5433 npm run db:up`.
+- Os arquivos de teste rodam sem paralelismo de arquivo para evitar disputa pelo mesmo pool/conexão.
 
-### 1. Ambiente Nuxt Integrado
-Sempre utilize a biblioteca `@nuxt/test-utils` para inicializar o contexto do Nuxt 3 (como injeção de composables, imports automáticos e roteamento). O arquivo de configuração central do Vitest é o [vitest.config.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/vitest.config.ts).
+## Testes de Integração
 
-### 2. Testando Serviços do Servidor (`server/services/`)
 - Crie testes de serviços dentro de `tests/integration/`.
-- **Validação de Banco de Dados**:
-  - Para testes que necessitam persistir informações reais no PostgreSQL, isole cada teste dentro de blocos de **Transação com Rollback** (`db.transaction()`) do Drizzle ORM, revertendo a inserção no final do bloco para evitar poluição do banco.
-  - Para testes de fluxo que não dependem da infraestrutura de rede externa do banco, utilize os stubs e spies do `vi.spyOn(db, 'select')` para validar se as consultas SQL corretas estão sendo invocadas e mapeadas pelo serviço.
+- Testes de service devem usar PostgreSQL real, rodar migrations no `beforeAll` e limpar tabelas entre casos.
+- Evite mocks de `db` em testes chamados de integração. Se for mockar, coloque em `tests/unit/`.
+- Feche o `pool` no `afterAll` quando o arquivo usar o client de banco diretamente.
 
-### 3. Testando Rotas de API (`server/api/`)
-Para rotas de API do servidor, você pode disparar requisições utilizando o método helper `$fetch` provido pelo `@nuxt/test-utils/e2e`.
-- Crie um arquivo com a extensão `.spec.ts` ou `.test.ts`.
-- Use a suite de E2E do `@nuxt/test-utils` para subir um servidor temporário da aplicação Nuxt de forma ágil e testar a resposta HTTP de ponta a ponta.
+## Testes E2E/API
+
+- Crie testes de rotas em `tests/e2e/`.
+- Use `setup` e `fetch` de `@nuxt/test-utils/e2e` para subir um servidor Nuxt temporário.
+- Cubra status code, payload JSON e validação Zod dos endpoints.
+- Para endpoints autenticados, cubra pelo menos a rejeição 401 e teste a lógica persistente no service enquanto não houver helper estável de sessão HTTP.

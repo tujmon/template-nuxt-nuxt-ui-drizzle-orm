@@ -1,0 +1,182 @@
+# Nuxt 3 Full-Stack Template
+
+Template opinativo com Nuxt 3, Nuxt UI, Drizzle ORM, PostgreSQL, Better Auth, Zod, Vitest e Docker Compose.
+
+## Stack
+
+- Nuxt 3 + Vue 3
+- Nuxt UI
+- Better Auth com adapter Drizzle
+- PostgreSQL
+- Drizzle ORM e Drizzle Kit
+- Zod para validação compartilhada entre cliente e servidor
+- Vitest para testes de integração e API
+- ESLint + Fallow para qualidade e detecção de código morto
+
+## Setup
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Crie o arquivo local de desenvolvimento:
+
+```bash
+cp .env.example .env
+```
+
+Em produção, gere um `BETTER_AUTH_SECRET` forte e único. Não reutilize os valores de exemplo ou de teste.
+
+Suba o PostgreSQL:
+
+```bash
+npm run db:up
+```
+
+Rode as migrations:
+
+```bash
+npm run db:migrate
+```
+
+Popule o banco com um usuário demo:
+
+```bash
+npm run db:seed
+```
+
+Credenciais padrão:
+
+```txt
+demo@example.com / password123
+```
+
+Inicie o app:
+
+```bash
+npm run dev
+```
+
+O seed é idempotente: pode ser executado novamente sem duplicar o usuário demo. Para customizar as credenciais, defina `SEED_USER_EMAIL`, `SEED_USER_NAME` e `SEED_USER_PASSWORD` no ambiente antes de rodar o script.
+Os scripts operacionais ficam em TypeScript em `scripts/` e são executados via `tsx` pelos comandos npm.
+
+Para rodar o seed contra o banco de teste/versionado em `.env.test`:
+
+```bash
+SEED_ENV_FILE=.env.test npm run db:seed
+```
+
+Comandos de seed disponíveis:
+
+```bash
+npm run db:seed
+npm run db:seed:system
+npm run db:seed:demo
+npm run db:seed:reset
+```
+
+## Testes
+
+O arquivo `.env.test` é versionado para padronizar o banco dos testes. Ele usa `localhost:5433`, útil quando uma instância local já ocupa `5432`.
+
+Suba o banco de teste:
+
+```bash
+POSTGRES_PORT=5433 npm run db:up
+```
+
+Execute a suíte:
+
+```bash
+npm test
+```
+
+## Qualidade
+
+```bash
+npm run lint
+npm run build
+```
+
+O lint combina ESLint e Fallow:
+
+```bash
+npm run lint:eslint
+npm run lint:fallow
+```
+
+Comandos úteis do Fallow:
+
+```bash
+npm run fallow:dead-code
+npm run fallow:dupes
+npm run fallow:health
+npm run fallow:production
+npm run fallow:fix:dry
+```
+
+Use `fallow:health` como relatório consultivo de complexidade e hotspots, e `fallow:fix:dry` antes de aceitar qualquer limpeza automática.
+
+O Fallow reconhece automaticamente plugins do projeto como Nuxt, Vitest, ESLint, TypeScript, Drizzle e hooks de Git. A configuração local complementa isso com entradas explícitas para scripts e testes.
+
+## CDD
+
+O template inclui um relatório inspirado em Cognitive-Driven Development (CDD), usando métricas do `fallow health` para aproximar Pontos de Complexidade Intrínseca (ICP) por arquivo:
+
+```bash
+npm run cdd:report
+CDD_ICP_LIMIT=20 npm run cdd:check
+```
+
+O cálculo considera decisões/branches, carga cognitiva, acoplamento, funções grandes e risco sem cobertura. Use o relatório para espalhar complexidade entre unidades menores antes que um arquivo concentre entendimento demais.
+
+## Rotas E API
+
+As páginas configuram acesso com `definePageMeta`:
+
+```ts
+definePageMeta({
+  auth: 'public' // public | guest | protected
+})
+```
+
+O middleware global usa `protected` como padrão quando `auth` é omitido.
+
+Endpoints versionados ficam em `server/api/v1`. O template inclui:
+
+- `GET /api/v1/status`: health/status operacional com dados básicos da dependência PostgreSQL.
+- `PATCH /api/v1/users/profile`: exige sessão, valida o payload com Zod e delega a atualização para `UserService`.
+- `POST /api/telemetry/performance`: endpoint opcional para receber métricas validadas de performance.
+
+Por segurança, os detalhes do banco em `/api/v1/status` só são expostos quando `STATUS_EXPOSE_DETAILS="true"`.
+
+## Segurança
+
+- Variáveis de ambiente do servidor são validadas com Zod em `server/utils/env.ts`.
+- Headers básicos de segurança são configurados no Nitro.
+- Endpoints sensíveis usam rate limit em memória por IP.
+- O seed recusa execução com `NODE_ENV=production`, salvo quando `ALLOW_PRODUCTION_SEED=true`.
+- O endpoint de telemetria é validado com Zod e rate limit próprio.
+
+## Performance
+
+Use `usePerformanceMeasure` para medir ações de UI sem gerar ruído de console:
+
+```ts
+const performanceMeasure = usePerformanceMeasure()
+
+await performanceMeasure.trackAsync('user-login-attempt', async () => {
+  // ação medida
+})
+```
+
+Para enviar a métrica ao endpoint opcional:
+
+```ts
+await performanceMeasure.trackAsync('user-login-attempt', action, {
+  thresholdMs: 500,
+  report: true
+})
+```

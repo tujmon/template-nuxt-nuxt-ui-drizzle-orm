@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { registerSchema, type RegisterInput } from '~~/shared/validation/auth'
 import { authClient } from '~~/utils/auth-client'
-import { useTracker } from '~~/composables/tracker'
+import { usePerformanceMeasure } from '~~/composables/performance-measure'
 
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  auth: 'guest'
 })
 
 const router = useRouter()
-const tracker = useTracker()
+const performanceMeasure = usePerformanceMeasure()
 
 const state = reactive<RegisterInput>({
   name: '',
@@ -24,7 +25,7 @@ const onSubmit = async () => {
   isLoading.value = true
   errorMessage.value = ''
 
-  await tracker.trackAsync('user-registration-attempt', async () => {
+  await performanceMeasure.trackAsync('user-registration-attempt', async () => {
     try {
       const { error } = await authClient.signUp.email({
         name: state.name,

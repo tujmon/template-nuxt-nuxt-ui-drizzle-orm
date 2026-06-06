@@ -1,21 +1,44 @@
-# Template Nuxt, Nuxt UI, Drizzle (PostgreSQL), Better-Auth & Zod
+# Template Nuxt Full-Stack
 
-Este arquivo centraliza o mapeamento de documentação das diferentes camadas de arquivos do projeto template, facilitando o trabalho de desenvolvimento e a preservação de padrões.
+Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, Drizzle ORM, Better Auth, Zod, Vitest e Docker Compose.
 
-## Links de Documentação dos Diretórios
-Utilize os links abaixo para ler a finalidade de cada seção:
+## Documentação Principal
+- [README.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/README.md): setup, scripts, rotas, testes e fluxo de desenvolvimento.
+- [package.json](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/package.json): scripts oficiais do projeto.
+- [.env.example](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/.env.example): variáveis de desenvolvimento.
+- [.env.test](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/.env.test): variáveis versionadas para testes.
+- [docker-compose.yml](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docker-compose.yml): PostgreSQL local.
 
-- [Tabelas de Banco de Dados & Conexão ORM](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/AGENT.md)
-- [Criação de Handlers de API (Endpoints)](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/api/AGENT.md)
-- [Camada de Lógica de Negócios (Services)](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/services/AGENT.md)
-- [Validação Centralizada com Zod](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/shared/validation/AGENT.md)
-- [Componentes UI & Padrões de Estilo](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/components/AGENT.md)
-- [Páginas de Visualização e Rotas](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/pages/AGENT.md)
-- [Padrões e Configuração de Testes de Integração](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/tests/AGENT.md)
+## Guias Por Diretório
+- [server/database/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/AGENT.md): conexão, schema, migrations e banco.
+- [server/api/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/api/AGENT.md): endpoints, versionamento, autenticação e validação.
+- [server/services/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/services/AGENT.md): lógica de negócio.
+- [shared/validation/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/shared/validation/AGENT.md): schemas Zod compartilhados.
+- [tests/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/tests/AGENT.md): testes de integração e API.
+- [pages/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/pages/AGENT.md): páginas e auth por rota.
+- [components/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/components/AGENT.md): componentes Vue.
+- [composables/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/composables/AGENT.md): composables client-side.
+- [middleware/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/AGENT.md): middlewares Nuxt.
+- [scripts/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/scripts/AGENT.md): scripts operacionais.
+- [types/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/types/AGENT.md): augmentations TypeScript.
 
-## Configurações Principais
-- **Instância Geral de Configuração**: [nuxt.config.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/nuxt.config.ts)
-- **Configuração do ORM Drizzle Kit**: [drizzle.config.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/drizzle.config.ts)
-- **Regras Globais de Qualidade de Código**: [eslint.config.js](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/eslint.config.js)
-- **Configuração de Execução de Testes**: [vitest.config.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/vitest.config.ts)
-- **Gatilho de Verificação Pré-Commit (Git Hook)**: Configurado automaticamente via `simple-git-hooks` e `lint-staged` no [package.json](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/package.json) para rodar a checagem de regras em arquivos modificados no commit.
+## Comandos Canônicos
+- `npm run db:up`: sobe o PostgreSQL local.
+- `npm run db:migrate`: aplica migrations.
+- `npm run db:seed`: cria usuário demo idempotente.
+- `npm test`: roda integração Postgres e E2E de API.
+- `npm run lint`: ESLint e Fallow sem ruído.
+- `npm run fallow:health`: relatório consultivo de complexidade, hotspots e gaps.
+- `npm run fallow:fix:dry`: prévia segura de limpezas automáticas.
+- `npm run cdd:report`: relatório de ICP inspirado em Cognitive-Driven Development.
+- `npm run cdd:check`: falha se algum arquivo ultrapassar `CDD_ICP_LIMIT`.
+- `npm run build`: build Nuxt/Nitro com typecheck.
+
+## Regras Globais
+- APIs de aplicação devem ficar em `/api/v1`, exceto rotas internas de auth e endpoints técnicos explicitamente documentados.
+- Payloads de APIs devem ser validados com Zod em `shared/validation`.
+- Regras de negócio devem ficar em services; handlers atuam como controladores.
+- Testes que tocam banco usam `.env.test` e o PostgreSQL em `localhost:5433`.
+- Não introduza logs de console em código de app; scripts CLI podem usar `console` com justificativa local.
+- Use Fallow para proteger o template contra dependências não usadas, exports mortos, duplicação e crescimento acidental de complexidade.
+- Use o relatório CDD para impedir concentração de carga cognitiva por arquivo antes de refatorações crescerem.

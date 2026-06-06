@@ -1,3 +1,9 @@
+<script setup lang="ts">
+definePageMeta({
+  auth: 'public'
+})
+</script>
+
 <template>
   <div class="max-w-4xl mx-auto space-y-12">
     <!-- Hero Section -->
@@ -56,7 +62,7 @@
           <h3 class="font-bold text-lg text-white">Performance Auditing</h3>
         </div>
         <p class="text-sm text-slate-400">
-          Métricas integradas usando o composable <code class="text-pink-300 font-mono">useTracker</code> no front-end baseado na API de User Timing oficial para monitoramento de latência.
+          Métricas integradas usando o composable <code class="text-pink-300 font-mono">usePerformanceMeasure</code> no front-end baseado na API de User Timing oficial para monitoramento de latência.
         </p>
       </div>
     </div>

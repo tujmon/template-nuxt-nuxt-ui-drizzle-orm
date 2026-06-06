@@ -1,0 +1,11 @@
+# Types Directory
+
+Este diretório contém augmentations TypeScript globais ou específicas de framework.
+
+## Estrutura Atual
+- [page-meta.d.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/types/page-meta.d.ts): Expande `PageMeta` do Nuxt com a chave `auth`.
+
+## Padrões Recomendados
+- Use arquivos `.d.ts` apenas para augmentations globais ou de módulos.
+- Sempre finalize arquivos de augmentation com `export {}` para garantir escopo de módulo.
+- Ao adicionar novas chaves de `definePageMeta`, atualize este diretório e o [middleware/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/AGENT.md).

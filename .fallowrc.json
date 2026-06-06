@@ -1,15 +1,27 @@
 {
   "$schema": "https://raw.githubusercontent.com/fallow-rs/fallow/main/schema.json",
   "entry": [
-    "src/index.{ts,tsx,js,jsx}",
-    "src/main.{ts,tsx,js,jsx}"
+    "nuxt.config.ts",
+    "drizzle.config.ts",
+    "eslint.config.js",
+    "vitest.config.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.{ts,js}"
   ],
   "duplicates": {
-    "minOccurrences": 3
+    "mode": "mild",
+    "minTokens": 50,
+    "minLines": 5,
+    "minOccurrences": 2,
+    "ignoreImports": true
   },
   "rules": {
+    "unused-files": "warn",
     "unused-dependencies": "warn",
     "unused-dev-dependencies": "warn",
-    "unused-exports": "warn"
+    "unlisted-dependencies": "warn",
+    "unused-exports": "warn",
+    "unused-types": "warn",
+    "circular-dependencies": "warn"
   }
 }

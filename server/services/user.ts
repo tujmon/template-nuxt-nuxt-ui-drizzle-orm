@@ -1,7 +1,7 @@
 import { BaseService } from './base'
 import { user } from '../database/schema/auth'
 import { eq } from 'drizzle-orm'
-import type { UpdateProfileInput } from '../../shared/validation/auth'
+import { updateProfileSchema, type UpdateProfileInput } from '../../shared/validation/auth'
 
 export class UserService extends BaseService {
   async findById(id: string) {
@@ -10,11 +10,12 @@ export class UserService extends BaseService {
   }
 
   async updateProfile(id: string, data: UpdateProfileInput) {
+    const validatedData = updateProfileSchema.parse(data)
     const updateData: Partial<typeof user.$inferInsert> = {
       updatedAt: new Date()
     }
-    if (data.name) updateData.name = data.name
-    if (data.email) updateData.email = data.email
+    if (validatedData.name) updateData.name = validatedData.name
+    if (validatedData.email) updateData.email = validatedData.email
 
     await this.db.update(user).set(updateData).where(eq(user.id, id))
     return this.findById(id)

@@ -1,18 +1,22 @@
 <script setup lang="ts">
 import { authClient } from '~~/utils/auth-client'
-import { useTracker } from '~~/composables/tracker'
+import { usePerformanceMeasure } from '~~/composables/performance-measure'
 import StatusPanel from '~~/components/dashboard/StatusPanel.vue'
 import ActionPanel from '~~/components/dashboard/ActionPanel.vue'
 
+definePageMeta({
+  auth: 'protected'
+})
+
 const { data: session } = await authClient.useSession(useFetch)
-const tracker = useTracker()
+const performanceMeasure = usePerformanceMeasure()
 
 // Local states for Component Communication Demo
 const currentStatus = ref('Ativo')
 const clickCount = ref(0)
 
 const simulateHeavyTask = async () => {
-  await tracker.trackAsync('simulate-dashboard-heavy-task', async () => {
+  await performanceMeasure.trackAsync('simulate-dashboard-heavy-task', async () => {
     // Simulate some API request delay / calculations
     await new Promise(resolve => setTimeout(resolve, 450))
     clickCount.value += 10
@@ -20,15 +24,15 @@ const simulateHeavyTask = async () => {
 }
 
 const handleIncrement = () => {
-  tracker.startMark('increment-action')
+  performanceMeasure.startMark('increment-action')
   clickCount.value++
-  tracker.endMark('increment-action')
+  performanceMeasure.endMark('increment-action')
 }
 
 const handleStatusUpdate = (newStatus: string) => {
-  tracker.startMark('status-change-action')
+  performanceMeasure.startMark('status-change-action')
   currentStatus.value = newStatus
-  tracker.endMark('status-change-action')
+  performanceMeasure.endMark('status-change-action')
 }
 </script>
 

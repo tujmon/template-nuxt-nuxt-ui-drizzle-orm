@@ -10,5 +10,5 @@ Este diretório contém os componentes que formam as páginas e geram automatica
   - [index.vue](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/pages/dashboard/index.vue): Dashboard principal de visualização de sessão protegida.
 
 ## Padrões Recomendados
-- **Proteção de Acesso**: A proteção de rotas privadas é gerenciada globalmente pelo middleware [auth.global.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/auth.global.ts). Rotas públicas e páginas de login devem ser registradas nas exceções do middleware.
+- **Proteção de Acesso**: A proteção de rotas é gerenciada globalmente pelo middleware [auth.global.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/auth.global.ts), mas cada página configura seu comportamento via `definePageMeta({ auth: 'public' | 'guest' | 'protected' })`. Quando omitido, o padrão é `protected`.
 - **Tamanho dos Arquivos**: Mantenha as páginas limpas e focadas na orquestração de layouts e chamadas a serviços/composables. Extraia trechos de UI complexos para sub-componentes especializados.

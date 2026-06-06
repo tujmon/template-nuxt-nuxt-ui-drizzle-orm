@@ -22,6 +22,9 @@ export type RegisterInput = z.infer<typeof registerSchema>
 export const updateProfileSchema = z.object({
   name: z.string().min(2, 'O nome deve ter pelo menos 2 caracteres').optional(),
   email: z.string().email('Endereço de e-mail inválido').optional()
+}).refine(data => data.name || data.email, {
+  message: 'Informe pelo menos um campo para atualizar',
+  path: ['name']
 })
 
 export type UpdateProfileInput = z.infer<typeof updateProfileSchema>

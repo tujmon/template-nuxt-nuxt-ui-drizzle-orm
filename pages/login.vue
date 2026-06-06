@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { loginSchema, type LoginInput } from '~~/shared/validation/auth'
 import { authClient } from '~~/utils/auth-client'
-import { useTracker } from '~~/composables/tracker'
+import { usePerformanceMeasure } from '~~/composables/performance-measure'
 
 definePageMeta({
-  layout: 'auth'
+  layout: 'auth',
+  auth: 'guest'
 })
 
 const router = useRouter()
-const tracker = useTracker()
+const performanceMeasure = usePerformanceMeasure()
 
 const state = reactive<LoginInput>({
   email: '',
@@ -22,7 +23,7 @@ const onSubmit = async () => {
   isLoading.value = true
   errorMessage.value = ''
 
-  await tracker.trackAsync('user-login-attempt', async () => {
+  await performanceMeasure.trackAsync('user-login-attempt', async () => {
     try {
       const { error } = await authClient.signIn.email({
         email: state.email,
