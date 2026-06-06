@@ -6,9 +6,10 @@ Este arquivo centraliza o mapeamento de documentação das diferentes camadas de
 Utilize os links abaixo para ler a finalidade de cada seção:
 
 - [Tabelas de Banco de Dados & Conexão ORM](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/AGENT.md)
+- [Criação de Handlers de API (Endpoints)](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/api/AGENT.md)
 - [Camada de Lógica de Negócios (Services)](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/services/AGENT.md)
 - [Validação Centralizada com Zod](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/shared/validation/AGENT.md)
-- [Componentes UI Reutilizáveis](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/components/AGENT.md)
+- [Componentes UI & Padrões de Estilo](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/components/AGENT.md)
 - [Páginas de Visualização e Rotas](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/pages/AGENT.md)
 - [Padrões e Configuração de Testes de Integração](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/tests/AGENT.md)
 
