@@ -6,6 +6,7 @@ Este diretório gerencia toda a persistência de dados do template, integrando o
 - [client.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/client.ts): Inicializa o pool de conexão `pg` e expõe `pool` e `db`.
 - **schema/**: Contém as tabelas e relacionamentos do banco de dados:
   - [auth.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/schema/auth.ts): Tabelas necessárias para o ecossistema do Better-Auth.
+  - [scheduler.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/schema/scheduler.ts): Tabela de travas (locks) e controle do scheduler de tarefas.
   - [index.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/schema/index.ts): Exportador central das tabelas do banco de dados.
 - **migrations/**: Contém os arquivos SQL gerados pelo Drizzle Kit para controle de versão do banco de dados.
 

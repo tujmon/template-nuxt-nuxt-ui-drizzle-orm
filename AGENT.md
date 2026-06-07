@@ -13,6 +13,8 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 
 ## Guias Por Diretório
 - [server/database/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/AGENT.md): conexão, schema, migrations e banco.
+- [server/domain/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/domain/AGENT.md): entidades, regras e interfaces (ports) de domínio.
+- [server/infrastructure/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/infrastructure/AGENT.md): implementações de repositórios (adapters) usando Drizzle.
 - [server/api/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/api/AGENT.md): endpoints, versionamento, autenticação e validação.
 - [server/services/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/services/AGENT.md): lógica de negócio.
 - [shared/validation/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/shared/validation/AGENT.md): schemas Zod compartilhados.
