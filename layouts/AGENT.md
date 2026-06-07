@@ -9,5 +9,5 @@ Este diretório contém layouts Nuxt reutilizados por páginas.
 ## Padrões Recomendados
 - Layouts devem orquestrar estrutura visual ampla, não regras de negócio.
 - Não duplique lógica de proteção de rota em layouts; use `definePageMeta({ auth })` e o middleware global.
-- Mantenha chamadas de sessão em layout apenas quando a navegação precisa reagir ao usuário autenticado.
+- Mantenha chamadas de sessão em layout apenas quando a navegação precisa reagir ao usuário autenticado, utilizando sempre o composable `useAuthSession` para evitar requisições redundantes.
 - Evite colocar cards dentro de cards; layouts devem ser superfícies amplas e estáveis.

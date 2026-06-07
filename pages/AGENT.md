@@ -12,3 +12,4 @@ Este diretório contém os componentes que formam as páginas e geram automatica
 ## Padrões Recomendados
 - **Proteção de Acesso**: A proteção de rotas é gerenciada globalmente pelo middleware [auth.global.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/auth.global.ts), mas cada página configura seu comportamento via `definePageMeta({ auth: 'public' | 'guest' | 'protected' })`. Quando omitido, o padrão é `protected`.
 - **Tamanho dos Arquivos**: Mantenha as páginas limpas e focadas na orquestração de layouts e chamadas a serviços/composables. Extraia trechos de UI complexos para sub-componentes especializados.
+- **SEO por Rota**: Use `useSeoMeta` para definir título e descrição específicos em cada página. Em páginas privadas/autenticadas (ex: `/dashboard`), use `robots: 'noindex, nofollow'` para evitar indexação desnecessária por motores de busca.

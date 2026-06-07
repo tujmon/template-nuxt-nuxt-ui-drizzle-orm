@@ -11,4 +11,4 @@ Este diretório contém utilitários server-side compartilhados por handlers, se
 - Valide novas envs em `env.ts` antes de usar em código servidor.
 - Não leia `process.env` diretamente em handlers/services quando a variável fizer parte da configuração do app.
 - Use `auth.api.getSession` em handlers que precisam de sessão.
-- O rate limit atual é adequado para desenvolvimento/MVP; para produção distribuída, substitua por storage compartilhado como Redis.
+- O rate limit em memória (`rate-limit.ts`) é adequado para desenvolvimento/MVP e possui um mecanismo de limpeza preguiçosa (lazy cleanup) periódico para evitar memory leaks. Para produção distribuída (multi-instância), substitua por um storage compartilhado como Redis.

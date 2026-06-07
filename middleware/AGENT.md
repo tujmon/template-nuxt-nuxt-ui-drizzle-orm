@@ -12,3 +12,4 @@ Este diretório contém middlewares de rota do Nuxt.
 - `guest`: disponível apenas sem sessão; usuários autenticados são enviados para `/dashboard`.
 - `protected`: exige sessão; usuários sem sessão são enviados para `/login`.
 - Não mantenha listas fixas de paths públicos no middleware. A configuração deve ficar na própria página.
+- Utilize o composable `useAuthSession` para checar e ler os dados da sessão do usuário no middleware, garantindo a desduplicação correta e segurança do SSR.

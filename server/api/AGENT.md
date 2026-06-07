@@ -41,12 +41,10 @@ Para garantir consistência e segurança, todo endpoint deve seguir a estrutura 
 ### Exemplo de Estrutura de Endpoint
 ```typescript
 import { updateProfileSchema } from '~/shared/validation/auth'
-import { UserService } from '~/server/services/user'
+import { userService } from '~/server/services/user'
 import { auth } from '~/server/utils/auth'
 
 export default defineEventHandler(async (event) => {
-  assertMethod(event, 'PATCH')
-
   const session = await auth.api.getSession({
     headers: toWebRequest(event).headers
   })
@@ -66,7 +64,6 @@ export default defineEventHandler(async (event) => {
     })
   }
 
-  const userService = new UserService()
   const updatedUser = await userService.updateProfile(session.user.id, result.data)
 
   return { success: true, user: updatedUser }
