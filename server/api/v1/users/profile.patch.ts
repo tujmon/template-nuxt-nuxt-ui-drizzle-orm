@@ -1,4 +1,3 @@
-import { ZodError } from 'zod'
 import { updateProfileSchema } from '~~/shared/validation/auth'
 import { userService } from '~~/server/services/user'
 import { auth } from '~~/server/utils/auth'
@@ -47,17 +46,13 @@ export default defineEventHandler(async (event) => {
       user: updatedUser
     }
   } catch (error) {
-    if (error instanceof ZodError) {
-      throw createError({
-        statusCode: 400,
-        message: 'Dados de entrada inválidos',
-        data: error.format()
-      })
-    }
+    const message = error instanceof Error ? error.message : 'Erro interno ao atualizar perfil'
+    const isValidationError = message === 'Informe pelo menos um campo para atualizar' || 
+                              message.includes('E-mail inválido')
 
     throw createError({
-      statusCode: 500,
-      message: 'Erro interno ao atualizar perfil'
+      statusCode: isValidationError ? 400 : 500,
+      message
     })
   }
 })

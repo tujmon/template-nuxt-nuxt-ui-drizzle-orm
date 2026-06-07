@@ -1,5 +1,5 @@
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
-import { describe, it, expect, beforeAll, beforeEach, afterAll } from 'vitest'
+import { describe, it, expect, beforeAll, beforeEach, afterAll, vi } from 'vitest'
 import { UserService } from '../../server/services/user'
 import { db, pool } from '../../server/database/client'
 import { account, session, user, verification } from '../../server/database/schema/auth'
@@ -68,5 +68,46 @@ describe('UserService Integration Test', () => {
     await expect(userService.updateProfile('usr_123', {})).rejects.toThrow(
       'Informe pelo menos um campo para atualizar'
     )
+  })
+
+  describe('UserService Unit Test with Mock Repository', () => {
+    it('should query the mocked repository', async () => {
+      const mockUser = {
+        id: 'usr_mock',
+        name: 'Mock User',
+        email: 'mock@domain.com',
+        emailVerified: true,
+        image: null,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
+
+      const mockUserRepository = {
+        findById: vi.fn().mockResolvedValue(mockUser),
+        update: vi.fn().mockResolvedValue({ ...mockUser, name: 'Mock Updated' })
+      }
+
+      const mockUserService = new UserService(mockUserRepository)
+      const result = await mockUserService.findById('usr_mock')
+
+      expect(mockUserRepository.findById).toHaveBeenCalledWith('usr_mock')
+      expect(result).toEqual(mockUser)
+    })
+
+    it('should reject domain validations without invoking persistence', async () => {
+      const mockUserRepository = {
+        findById: vi.fn(),
+        update: vi.fn()
+      }
+
+      const mockUserService = new UserService(mockUserRepository)
+
+      // Test validation of invalid email
+      await expect(
+        mockUserService.updateProfile('usr_mock', { email: 'invalid-email' })
+      ).rejects.toThrow('E-mail inválido de acordo com as regras de domínio')
+
+      expect(mockUserRepository.update).not.toHaveBeenCalled()
+    })
   })
 })

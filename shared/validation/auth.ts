@@ -26,5 +26,3 @@ export const updateProfileSchema = z.object({
   message: 'Informe pelo menos um campo para atualizar',
   path: ['name']
 })
-
-export type UpdateProfileInput = z.infer<typeof updateProfileSchema>
