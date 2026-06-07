@@ -13,6 +13,7 @@ Este diretório contém os componentes reutilizáveis da interface visual.
 ## Padrões Recomendados
 - **Props e Emits Fortes**: Sempre declare as propriedades e eventos usando interfaces TypeScript e macros nativas do Vue (`defineProps` e `defineEmits`).
 - **Nuxt UI 4**: Use componentes e props atuais (`UFormField`, `UDropdownMenu`, `USelect :items`). `UModal` deve receber conteúdo por slots nomeados, normalmente `#content`; o slot default é tratado como trigger.
+- **Padrão de UI**: Siga [docs/ui-standards.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/ui-standards.md) para ações, botões, modais, feedback e alinhamentos.
 - **Organização**:
   - Componentes de uso geral do sistema (ex: inputs customizados, botões específicos, cards genéricos) devem ser criados sob uma pasta `common/`.
   - Componentes específicos de uma funcionalidade devem ser organizados em pastas nomeadas de acordo (ex: `auth/`, `dashboard/`).
@@ -34,4 +35,3 @@ Para manter o template flexível e customizável:
 - Escreva componentes preparados para alternar entre Dark Mode e Light Mode utilizando os prefixos do Tailwind (ex: `bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-50`).
 - Mantenha as bordas e fundos flexíveis usando classes neutras (ex: `border-gray-200 dark:border-gray-800`).
 - **CSS Scoped**: Se for estritamente necessário criar uma tag `<style>` dentro de um componente Vue, **ela deve obrigatoriamente possuir a propriedade `scoped`** (ex: `<style scoped>`). Isso previne vazamentos de estilos para outros elementos e garante encapsulamento.
-

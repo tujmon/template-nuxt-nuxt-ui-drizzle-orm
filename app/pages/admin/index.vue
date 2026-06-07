@@ -75,7 +75,7 @@ onMounted(() => {
 <template>
   <div class="space-y-6">
     <!-- Header -->
-    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
       <div>
         <h1 class="text-2xl font-bold text-white">Administração de Usuários</h1>
         <p class="text-sm text-slate-400">Gerencie usuários, cargos, banimentos e simule sessões utilizando o Better Auth.</p>
@@ -83,6 +83,7 @@ onMounted(() => {
       <UButton
         color="success"
         icon="i-heroicons-user-plus"
+        class="w-auto shrink-0"
         @click="createUserModalOpen = true"
       >
         Novo Usuário

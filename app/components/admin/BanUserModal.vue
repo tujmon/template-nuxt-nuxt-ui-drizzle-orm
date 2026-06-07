@@ -78,10 +78,10 @@ const confirmBan = async () => {
             Tem certeza de que deseja banir <span class="font-bold text-white">{{ user?.name }}</span>? Este usuário perderá acesso imediato ao aplicativo.
           </p>
           <UFormField label="Motivo (opcional)">
-            <UInput v-model="banReason" placeholder="Ex: Violação dos termos de uso" color="neutral" />
+            <UInput v-model="banReason" placeholder="Ex: Violação dos termos de uso" color="neutral" class="w-full" />
           </UFormField>
 
-          <div class="flex justify-end space-x-3 pt-4">
+          <div class="flex justify-end gap-3 pt-4">
             <UButton color="neutral" variant="ghost" @click="isOpen = false">Cancelar</UButton>
             <UButton color="error" @click="confirmBan">Confirmar Banimento</UButton>
           </div>

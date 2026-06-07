@@ -80,13 +80,13 @@ const handleCreateUser = async () => {
 
         <form class="space-y-4" @submit.prevent="handleCreateUser">
           <UFormField label="Nome" required>
-            <UInput v-model="newUser.name" placeholder="Ex: Arthur Silva" color="neutral" />
+            <UInput v-model="newUser.name" placeholder="Ex: Arthur Silva" color="neutral" class="w-full" />
           </UFormField>
           <UFormField label="E-mail" required>
-            <UInput v-model="newUser.email" type="email" placeholder="Ex: arthur@exemplo.com" color="neutral" />
+            <UInput v-model="newUser.email" type="email" placeholder="Ex: arthur@exemplo.com" color="neutral" class="w-full" />
           </UFormField>
           <UFormField label="Senha" required>
-            <UInput v-model="newUser.password" type="password" placeholder="Senha forte" color="neutral" />
+            <UInput v-model="newUser.password" type="password" placeholder="Senha forte" color="neutral" class="w-full" />
           </UFormField>
           <UFormField label="Cargo">
             <USelect
@@ -96,10 +96,11 @@ const handleCreateUser = async () => {
                 { label: 'Administrador', value: 'admin' }
               ]"
               color="neutral"
+              class="w-full"
             />
           </UFormField>
 
-          <div class="flex justify-end space-x-3 pt-4">
+          <div class="flex justify-end gap-3 pt-4">
             <UButton color="neutral" variant="ghost" @click="isOpen = false">Cancelar</UButton>
             <UButton type="submit" color="success" :loading="creatingUser">Criar</UButton>
           </div>

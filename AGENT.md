@@ -10,6 +10,7 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - [docker-compose.yml](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docker-compose.yml): PostgreSQL local.
 - [docs/invariants.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/invariants.md): regras que não devem ser quebradas.
 - [docs/agent-recipes.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/agent-recipes.md): receitas para tarefas comuns.
+- [docs/ui-standards.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/ui-standards.md): padrões de interface, ações, botões, modais, feedback e fluxos.
 
 ## Guias Por Diretório
 - [server/database/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/AGENT.md): conexão, schema, migrations e banco.
@@ -52,10 +53,12 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - Nuxt usa o diretório `app/`; não recrie diretórios legados na raiz como `pages/`, `components/`, `layouts/`, `middleware/`, `utils/` ou `assets/`.
 - O Nuxt UI está na versão 4. Use APIs atuais como `UFormField`, `UTable :data`, `UDropdownMenu`, `USelect :items` e `UModal` com slots nomeados (`#content`, `#body`, etc.).
 - O Better Auth Admin está habilitado com banimento, roles e impersonation. Impersonation usa sessão temporária com `session.impersonatedBy`; mantenha essa coluna no schema/migrations.
+- Antes de criar ou alterar interfaces, siga [docs/ui-standards.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/ui-standards.md) para posicionamento de ações, hierarquia de botões, feedback e fluxos.
 
 ## Checklist Obrigatório Para Agentes
 - Leia [docs/invariants.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/invariants.md) antes de criar padrões novos.
 - Use as receitas em [docs/agent-recipes.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/agent-recipes.md) para endpoints, páginas, envs, seeds e schemas.
+- Use [docs/ui-standards.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/ui-standards.md) para mudanças visuais, fluxos do usuário e ações.
 - Rode `npm run agent:check` antes de finalizar uma mudança.
 - Se `agent:check` falhar por banco indisponível, suba `POSTGRES_PORT=5433 npm run db:up` e rode novamente.
 - Não contorne testes de arquitetura sem atualizar explicitamente os invariantes do projeto.
