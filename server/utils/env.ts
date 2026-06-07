@@ -21,3 +21,5 @@ const serverEnvSchema = z.object({
 export const env = serverEnvSchema.parse(process.env)
 
 export const isProd = process.env.NODE_ENV === 'production'
+
+export const nodeEnv = process.env.NODE_ENV || 'development'

@@ -8,6 +8,13 @@
       "when": 1780777049452,
       "tag": "0000_public_big_bertha",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1780854640022,
+      "tag": "0001_bent_pyro",
+      "breakpoints": true
     }
   ]
 }

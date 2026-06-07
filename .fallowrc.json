@@ -6,7 +6,8 @@
     "eslint.config.js",
     "vitest.config.ts",
     "scripts/**/*.ts",
-    "tests/**/*.{ts,js}"
+    "tests/**/*.{ts,js}",
+    "server/tasks/**/*.ts"
   ],
   "duplicates": {
     "mode": "mild",

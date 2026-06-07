@@ -37,6 +37,13 @@ export default defineNuxtConfig({
     }
   },
   nitro: {
+    experimental: {
+      tasks: true
+    },
+    scheduledTasks: {
+      // Run daily at midnight to remove expired database sessions
+      '0 0 * * *': ['cleanup-sessions']
+    },
     routeRules: {
       '/**': {
         headers: {
