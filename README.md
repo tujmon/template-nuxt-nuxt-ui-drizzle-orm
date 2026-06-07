@@ -93,11 +93,19 @@ Execute a suíte:
 npm test
 ```
 
+Além dos testes de integração e API, `tests/architecture` protege invariantes do template, como versionamento de rotas, uso de Zod no servidor, env centralizado e pages com `definePageMeta`.
+
 ## Qualidade
 
 ```bash
 npm run lint
 npm run build
+```
+
+Para agentes de IA ou mudanças maiores, rode a validação completa:
+
+```bash
+npm run agent:check
 ```
 
 O lint combina ESLint e Fallow:
@@ -151,6 +159,12 @@ Endpoints versionados ficam em `server/api/v1`. O template inclui:
 - `POST /api/telemetry/performance`: endpoint opcional para receber métricas validadas de performance.
 
 Por segurança, os detalhes do banco em `/api/v1/status` só são expostos quando `STATUS_EXPOSE_DETAILS="true"`.
+
+## Guardrails Para Agentes
+
+- [docs/invariants.md](docs/invariants.md): regras que não devem ser quebradas sem decisão explícita.
+- [docs/agent-recipes.md](docs/agent-recipes.md): receitas para endpoints, páginas, envs, seeds e schemas.
+- `npm run agent:check`: lint, testes, CDD check e build em um único comando.
 
 ## Segurança
 

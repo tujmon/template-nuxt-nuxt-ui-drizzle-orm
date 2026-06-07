@@ -8,6 +8,8 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - [.env.example](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/.env.example): variáveis de desenvolvimento.
 - [.env.test](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/.env.test): variáveis versionadas para testes.
 - [docker-compose.yml](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docker-compose.yml): PostgreSQL local.
+- [docs/invariants.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/invariants.md): regras que não devem ser quebradas.
+- [docs/agent-recipes.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/agent-recipes.md): receitas para tarefas comuns.
 
 ## Guias Por Diretório
 - [server/database/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/database/AGENT.md): conexão, schema, migrations e banco.
@@ -33,6 +35,7 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - `npm run cdd:report`: relatório de ICP inspirado em Cognitive-Driven Development.
 - `npm run cdd:check`: falha se algum arquivo ultrapassar `CDD_ICP_LIMIT`.
 - `npm run build`: build Nuxt/Nitro com typecheck.
+- `npm run agent:check`: validação completa para agentes antes de finalizar.
 
 ## Regras Globais
 - APIs de aplicação devem ficar em `/api/v1`, exceto rotas internas de auth e endpoints técnicos explicitamente documentados.
@@ -42,3 +45,10 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - Não introduza logs de console em código de app; scripts CLI podem usar `console` com justificativa local.
 - Use Fallow para proteger o template contra dependências não usadas, exports mortos, duplicação e crescimento acidental de complexidade.
 - Use o relatório CDD para impedir concentração de carga cognitiva por arquivo antes de refatorações crescerem.
+
+## Checklist Obrigatório Para Agentes
+- Leia [docs/invariants.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/invariants.md) antes de criar padrões novos.
+- Use as receitas em [docs/agent-recipes.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/agent-recipes.md) para endpoints, páginas, envs, seeds e schemas.
+- Rode `npm run agent:check` antes de finalizar uma mudança.
+- Se `agent:check` falhar por banco indisponível, suba `POSTGRES_PORT=5433 npm run db:up` e rode novamente.
+- Não contorne testes de arquitetura sem atualizar explicitamente os invariantes do projeto.

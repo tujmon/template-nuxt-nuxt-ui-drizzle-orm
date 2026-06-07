@@ -25,3 +25,10 @@ Este diretório contém os testes automatizados da aplicação usando **Vitest**
 - Use `setup` e `fetch` de `@nuxt/test-utils/e2e` para subir um servidor Nuxt temporário.
 - Cubra status code, payload JSON e validação Zod dos endpoints.
 - Para endpoints autenticados, cubra pelo menos a rejeição 401 e teste a lógica persistente no service enquanto não houver helper estável de sessão HTTP.
+
+## Testes De Arquitetura
+
+- Regras globais verificáveis ficam em `tests/architecture/`.
+- Prefira testes de arquitetura para proteger invariantes simples de arquivo, import e localização.
+- Quando uma exceção for legítima, documente primeiro em `docs/invariants.md` e depois ajuste o teste.
+- Não remova uma regra de arquitetura só para fazer uma implementação local passar.

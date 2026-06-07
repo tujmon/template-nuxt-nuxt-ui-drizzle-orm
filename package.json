@@ -27,7 +27,8 @@
     "fallow:fix:dry": "fallow fix --dry-run",
     "cdd:report": "tsx scripts/cdd-report.ts",
     "cdd:check": "tsx scripts/cdd-report.ts --fail-on-limit",
-    "ci": "npm run lint && npm test && npm run build",
+    "agent:check": "npm run lint && npm test && npm run cdd:check && npm run build",
+    "ci": "npm run agent:check",
     "test": "vitest run"
   },
   "dependencies": {
