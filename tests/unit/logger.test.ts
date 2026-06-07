@@ -4,7 +4,7 @@ import { logger, useLogger, jsonReporter } from '../../server/utils/logger'
 import type { H3Event } from 'h3'
 
 describe('Logger Utility Test', () => {
-  let stdoutWriteSpy: MockInstance<(str: string) => boolean> | undefined
+  let stdoutWriteSpy: MockInstance<(str: string) => boolean>
 
   beforeEach(() => {
     stdoutWriteSpy = vi.spyOn(process.stdout, 'write').mockImplementation(() => true) as unknown as MockInstance<(str: string) => boolean>
@@ -12,19 +12,14 @@ describe('Logger Utility Test', () => {
 
   afterEach(() => {
     vi.restoreAllMocks()
-    stdoutWriteSpy = undefined
   })
 
   // Helper to retrieve and parse stdout calls
   const getParsedLog = (callIndex = 0) => {
-    const spy = stdoutWriteSpy
-    if (!spy) {
-      throw new Error('stdoutWriteSpy is not initialized')
-    }
-    const calls = spy.mock.calls
+    const calls = stdoutWriteSpy!.mock.calls
     const call = calls[callIndex]
     if (!call) {
-      throw new Error(`No mock call found at index ${callIndex}`)
+      throw new Error(`Expected call at index ${callIndex} but none found`)
     }
     const raw = call[0] as string
     return JSON.parse(raw)
