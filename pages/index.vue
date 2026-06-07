@@ -2,6 +2,11 @@
 definePageMeta({
   auth: 'public'
 })
+
+useSeoMeta({
+  title: 'Início — Nuxt 3 Full-Stack Template',
+  description: 'Template opinativo com Nuxt UI, Drizzle ORM, Better-Auth e Zod. Projetado para segurança, velocidade e tipagem estrita de ponta a ponta.'
+})
 </script>
 
 <template>

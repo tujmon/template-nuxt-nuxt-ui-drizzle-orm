@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { authClient } from '~~/utils/auth-client'
 import { usePerformanceMeasure } from '~~/composables/performance-measure'
 import StatusPanel from '~~/components/dashboard/StatusPanel.vue'
 import ActionPanel from '~~/components/dashboard/ActionPanel.vue'
@@ -8,7 +7,12 @@ definePageMeta({
   auth: 'protected'
 })
 
-const { data: session } = await authClient.useSession(useFetch)
+useSeoMeta({
+  title: 'Dashboard — Nuxt 3 Full-Stack Template',
+  robots: 'noindex, nofollow'
+})
+
+const { data: session } = await useAuthSession()
 const performanceMeasure = usePerformanceMeasure()
 
 // Local states for Component Communication Demo

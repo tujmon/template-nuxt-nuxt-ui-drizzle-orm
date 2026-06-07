@@ -13,6 +13,24 @@ type RateLimitEntry = {
 
 const buckets = new Map<string, RateLimitEntry>()
 
+const CLEANUP_INTERVAL_MS = 60_000
+let lastCleanupAt = Date.now()
+
+const cleanupExpiredBuckets = () => {
+  const now = Date.now()
+  if (now - lastCleanupAt < CLEANUP_INTERVAL_MS) {
+    return
+  }
+
+  lastCleanupAt = now
+
+  for (const [key, entry] of buckets) {
+    if (entry.resetAt <= now) {
+      buckets.delete(key)
+    }
+  }
+}
+
 const getClientIp = (event: Parameters<typeof getRequestIP>[0]) => {
   return getRequestIP(event, { xForwardedFor: true }) || 'unknown'
 }
@@ -21,6 +39,8 @@ export const assertRateLimit = (event: Parameters<typeof getRequestIP>[0], optio
   if (!env.RATE_LIMIT_ENABLED) {
     return
   }
+
+  cleanupExpiredBuckets()
 
   const now = Date.now()
   const windowMs = options.windowMs ?? env.RATE_LIMIT_WINDOW_MS

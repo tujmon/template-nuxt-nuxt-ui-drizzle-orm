@@ -1,8 +1,6 @@
-import { authClient } from '~~/utils/auth-client'
-
 export default defineNuxtRouteMiddleware(async (to) => {
   // Use Nuxt's useFetch integration to fetch session with correct cookies on SSR
-  const { data: session } = await authClient.useSession(useFetch)
+  const { data: session } = await useAuthSession()
 
   const authMode = to.meta.auth ?? 'protected'
 

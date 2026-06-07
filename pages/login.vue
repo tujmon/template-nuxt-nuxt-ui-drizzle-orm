@@ -8,6 +8,10 @@ definePageMeta({
   auth: 'guest'
 })
 
+useSeoMeta({
+  title: 'Entrar — Nuxt 3 Full-Stack Template'
+})
+
 const router = useRouter()
 const performanceMeasure = usePerformanceMeasure()
 

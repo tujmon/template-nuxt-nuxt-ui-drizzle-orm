@@ -1,6 +1,6 @@
 import { ZodError } from 'zod'
 import { updateProfileSchema } from '~~/shared/validation/auth'
-import { UserService } from '~~/server/services/user'
+import { userService } from '~~/server/services/user'
 import { auth } from '~~/server/utils/auth'
 import { assertRateLimit } from '~~/server/utils/rate-limit'
 
@@ -8,8 +8,6 @@ export default defineEventHandler(async (event) => {
   assertRateLimit(event, {
     keyPrefix: 'profile:update'
   })
-
-  assertMethod(event, 'PATCH')
 
   const session = await auth.api.getSession({
     headers: toWebRequest(event).headers
@@ -32,8 +30,6 @@ export default defineEventHandler(async (event) => {
       data: result.error.format()
     })
   }
-
-  const userService = new UserService()
 
   try {
     const updatedUser = await userService.updateProfile(session.user.id, result.data)

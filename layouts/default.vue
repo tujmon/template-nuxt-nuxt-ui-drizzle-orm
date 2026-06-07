@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { authClient } from '~~/utils/auth-client'
 
-const { data: session } = await authClient.useSession(useFetch)
+const { data: session } = await useAuthSession()
 const router = useRouter()
 
 const handleLogout = async () => {

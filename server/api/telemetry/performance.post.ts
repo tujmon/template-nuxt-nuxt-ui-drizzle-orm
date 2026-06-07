@@ -8,8 +8,6 @@ export default defineEventHandler(async (event) => {
     maxRequests: env.TELEMETRY_RATE_LIMIT_MAX_REQUESTS
   })
 
-  assertMethod(event, 'POST')
-
   const body = await readBody(event)
   const result = performanceMeasureSchema.safeParse(body)
 

@@ -21,3 +21,6 @@ export class UserService extends BaseService {
     return this.findById(id)
   }
 }
+
+export const userService = new UserService()
+

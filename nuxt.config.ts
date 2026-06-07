@@ -6,6 +6,27 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxt/eslint'
   ],
+  app: {
+    head: {
+      htmlAttrs: { lang: 'pt-BR' },
+      charset: 'utf-8',
+      viewport: 'width=device-width, initial-scale=1',
+      title: 'Nuxt 3 Full-Stack Template',
+      meta: [
+        { name: 'description', content: 'Template opinativo com Nuxt 3, Nuxt UI, Drizzle ORM, Better Auth e Zod. Projetado para segurança, velocidade e tipagem estrita de ponta a ponta.' },
+        { name: 'theme-color', content: '#0f172a' },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:title', content: 'Nuxt 3 Full-Stack Template' },
+        { property: 'og:description', content: 'Template opinativo com Nuxt 3, Nuxt UI, Drizzle ORM, Better Auth e Zod.' },
+        { name: 'twitter:card', content: 'summary' }
+      ],
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap' }
+      ]
+    }
+  },
   css: [
     '~/assets/css/main.css'
   ],
