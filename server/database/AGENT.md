@@ -21,3 +21,5 @@ Este diretório gerencia toda a persistência de dados do template, integrando o
 - Aplique migrations com `npm run db:migrate`.
 - Popule dados locais com `npm run db:seed`. O seed é idempotente e cria uma conta Better Auth `credential`.
 - Não crie clientes paralelos de banco em handlers ou services; reutilize `db` para ORM e `pool` somente quando uma query SQL operacional direta for necessária.
+- O plugin Better Auth Admin adiciona campos administrativos no schema de auth. A tabela `user` mantém `role`, `banned`, `ban_reason` e `ban_expires`; a tabela `session` mantém `impersonated_by` para sessões de impersonation.
+- Se recursos do Better Auth adicionarem campos ao schema, atualize `server/database/schema/auth.ts`, rode `npm run db:generate` e aplique a migration antes de validar no browser.

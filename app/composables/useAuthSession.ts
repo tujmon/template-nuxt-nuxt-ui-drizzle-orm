@@ -1,4 +1,4 @@
-import { authClient } from '~~/utils/auth-client'
+import { authClient } from '~/utils/auth-client'
 
 /**
  * Wraps Better Auth's `useSession` with Nuxt's `useFetch` for SSR-safe

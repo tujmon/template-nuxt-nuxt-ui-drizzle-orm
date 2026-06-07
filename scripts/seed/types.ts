@@ -13,11 +13,13 @@ export type SeedUser = {
   email: string
   name: string
   password: string
+  role?: string
 }
 
 export type SeedConfig = {
   databaseUrl: string
   demoUser: SeedUser
+  adminUser: SeedUser
 }
 
 export type SeedRecord = {

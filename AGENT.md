@@ -19,10 +19,12 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - [server/services/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/services/AGENT.md): lógica de negócio.
 - [shared/validation/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/shared/validation/AGENT.md): schemas Zod compartilhados.
 - [tests/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/tests/AGENT.md): testes de integração e API.
-- [pages/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/pages/AGENT.md): páginas e auth por rota.
-- [components/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/components/AGENT.md): componentes Vue.
-- [composables/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/composables/AGENT.md): composables client-side.
-- [middleware/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/AGENT.md): middlewares Nuxt.
+- [app/pages/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/pages/AGENT.md): páginas e auth por rota.
+- [app/components/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/components/AGENT.md): componentes Vue.
+- [app/composables/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/composables/AGENT.md): composables client-side.
+- [app/middleware/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/middleware/AGENT.md): middlewares Nuxt.
+- [app/layouts/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/layouts/AGENT.md): layouts e navegação autenticada.
+- [app/utils/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/utils/AGENT.md): utilitários client-side.
 - [scripts/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/scripts/AGENT.md): scripts operacionais.
 - [types/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/types/AGENT.md): augmentations TypeScript.
 
@@ -47,6 +49,9 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - Não introduza logs de console em código de app; scripts CLI podem usar `console` com justificativa local.
 - Use Fallow para proteger o template contra dependências não usadas, exports mortos, duplicação e crescimento acidental de complexidade.
 - Use o relatório CDD para impedir concentração de carga cognitiva por arquivo antes de refatorações crescerem.
+- Nuxt usa o diretório `app/`; não recrie diretórios legados na raiz como `pages/`, `components/`, `layouts/`, `middleware/`, `utils/` ou `assets/`.
+- O Nuxt UI está na versão 4. Use APIs atuais como `UFormField`, `UTable :data`, `UDropdownMenu`, `USelect :items` e `UModal` com slots nomeados (`#content`, `#body`, etc.).
+- O Better Auth Admin está habilitado com banimento, roles e impersonation. Impersonation usa sessão temporária com `session.impersonatedBy`; mantenha essa coluna no schema/migrations.
 
 ## Checklist Obrigatório Para Agentes
 - Leia [docs/invariants.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/docs/invariants.md) antes de criar padrões novos.

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { usePerformanceMeasure } from '~~/composables/performance-measure'
-import StatusPanel from '~~/components/dashboard/StatusPanel.vue'
-import ActionPanel from '~~/components/dashboard/ActionPanel.vue'
+import { usePerformanceMeasure } from '~/composables/performance-measure'
+import StatusPanel from '~/components/dashboard/StatusPanel.vue'
+import ActionPanel from '~/components/dashboard/ActionPanel.vue'
 
 definePageMeta({
   auth: 'protected'
@@ -72,7 +72,7 @@ const handleStatusUpdate = (newStatus: string) => {
           <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Teste de Performance</span>
           <span class="text-xs text-slate-400 mt-1 block">Simular ação lenta (> 300ms)</span>
         </div>
-        <UButton color="orange" size="sm" icon="i-heroicons-bolt" @click="simulateHeavyTask">
+        <UButton color="warning" size="sm" icon="i-heroicons-bolt" @click="simulateHeavyTask">
           Testar
         </UButton>
       </div>

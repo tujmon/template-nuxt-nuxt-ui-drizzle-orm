@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { registerSchema, type RegisterInput } from '~~/shared/validation/auth'
-import { authClient } from '~~/utils/auth-client'
-import { usePerformanceMeasure } from '~~/composables/performance-measure'
+import { authClient } from '~/utils/auth-client'
+import { usePerformanceMeasure } from '~/composables/performance-measure'
 
 definePageMeta({
   layout: 'auth',
@@ -62,28 +62,28 @@ const onSubmit = async () => {
     <!-- Error Alert -->
     <UAlert
       v-if="errorMessage"
-      color="red"
+      color="error"
       variant="soft"
       icon="i-heroicons-exclamation-triangle"
       :title="errorMessage"
     />
 
     <UForm :schema="registerSchema" :state="state" class="space-y-4" @submit="onSubmit">
-      <UFormGroup label="Nome" name="name">
+      <UFormField label="Nome" name="name">
         <UInput v-model="state.name" placeholder="Seu Nome Completo" icon="i-heroicons-user" size="lg" />
-      </UFormGroup>
+      </UFormField>
 
-      <UFormGroup label="E-mail" name="email">
+      <UFormField label="E-mail" name="email">
         <UInput v-model="state.email" placeholder="seuemail@exemplo.com" icon="i-heroicons-envelope" size="lg" />
-      </UFormGroup>
+      </UFormField>
 
-      <UFormGroup label="Senha" name="password">
+      <UFormField label="Senha" name="password">
         <UInput v-model="state.password" type="password" placeholder="••••••••" icon="i-heroicons-lock-closed" size="lg" />
-      </UFormGroup>
+      </UFormField>
 
-      <UFormGroup label="Confirmar Senha" name="confirmPassword">
+      <UFormField label="Confirmar Senha" name="confirmPassword">
         <UInput v-model="state.confirmPassword" type="password" placeholder="••••••••" icon="i-heroicons-lock-closed" size="lg" />
-      </UFormGroup>
+      </UFormField>
 
       <UButton type="submit" block size="lg" :loading="isLoading" class="mt-6">
         Registrar

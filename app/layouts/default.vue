@@ -1,8 +1,20 @@
 <script setup lang="ts">
-import { authClient } from '~~/utils/auth-client'
+import { authClient } from '~/utils/auth-client'
 
 const { data: session } = await useAuthSession()
 const router = useRouter()
+
+const impersonatedBy = computed(() => {
+  const sessionData = session.value?.session as { impersonatedBy?: string } | undefined
+  return sessionData?.impersonatedBy
+})
+
+const stopImpersonating = async () => {
+  const { error } = await authClient.admin.stopImpersonating()
+  if (!error) {
+    window.location.assign('/admin')
+  }
+}
 
 const handleLogout = async () => {
   await authClient.signOut({
@@ -17,6 +29,26 @@ const handleLogout = async () => {
 
 <template>
   <div class="min-h-screen flex flex-col bg-slate-950 text-slate-100">
+    <div
+      v-if="impersonatedBy"
+      class="border-b border-amber-500/30 bg-amber-500/10 px-4 py-2 text-sm text-amber-100"
+    >
+      <div class="max-w-7xl mx-auto flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <span>
+          Você está impersonando <strong>{{ session?.user.name }}</strong>.
+        </span>
+        <UButton
+          color="warning"
+          variant="soft"
+          size="xs"
+          icon="i-heroicons-arrow-uturn-left"
+          @click="stopImpersonating"
+        >
+          Voltar ao admin
+        </UButton>
+      </div>
+    </div>
+
     <!-- Navigation Bar -->
     <header class="border-b border-slate-800 bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
@@ -31,6 +63,9 @@ const handleLogout = async () => {
             <NuxtLink to="/dashboard" class="text-sm font-medium text-slate-300 hover:text-white transition-colors" active-class="text-emerald-400">
               Dashboard
             </NuxtLink>
+            <NuxtLink v-if="(session?.user as any)?.role === 'admin'" to="/admin" class="text-sm font-medium text-slate-300 hover:text-white transition-colors" active-class="text-emerald-400">
+              Painel Admin
+            </NuxtLink>
           </nav>
         </div>
 
@@ -39,12 +74,12 @@ const handleLogout = async () => {
             <span class="text-sm text-slate-400 hidden sm:inline">
               Olá, <span class="text-slate-200 font-semibold">{{ session.user.name }}</span>
             </span>
-            <UButton color="red" variant="ghost" size="sm" @click="handleLogout">
+            <UButton color="error" variant="ghost" size="sm" @click="handleLogout">
               Sair
             </UButton>
           </template>
           <template v-else>
-            <UButton to="/login" variant="ghost" color="gray" size="sm">
+            <UButton to="/login" variant="ghost" color="neutral" size="sm">
               Entrar
             </UButton>
             <UButton to="/register" color="primary" size="sm">

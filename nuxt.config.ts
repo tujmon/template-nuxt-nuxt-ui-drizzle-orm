@@ -58,6 +58,17 @@ export default defineNuxtConfig({
   future: {
     compatibilityVersion: 4,
   },
+  vite: {
+    optimizeDeps: {
+      include: [
+        '@vue/devtools-core',
+        '@vue/devtools-kit',
+        'better-auth/client/plugins',
+        'better-auth/vue',
+        'zod'
+      ]
+    }
+  },
   typescript: {
     typeCheck: true,
     strict: true

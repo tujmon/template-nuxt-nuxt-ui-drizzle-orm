@@ -27,6 +27,8 @@ export const upsertCredentialUser = async (
         email,
         email_verified,
         image,
+        role,
+        banned,
         created_at,
         updated_at
       )
@@ -37,17 +39,21 @@ export const upsertCredentialUser = async (
         true,
         null,
         $4,
-        $4
+        false,
+        $5,
+        $5
       )
       ON CONFLICT (id) DO UPDATE
       SET
         name = EXCLUDED.name,
         email = EXCLUDED.email,
         email_verified = true,
+        role = EXCLUDED.role,
+        banned = EXCLUDED.banned,
         updated_at = EXCLUDED.updated_at
       RETURNING id, email;
     `,
-    [seedUser.id, seedUser.name, seedUser.email, now]
+    [seedUser.id, seedUser.name, seedUser.email, seedUser.role || 'user', now]
   )
 
   const user = userResult.rows[0] as UserRow | undefined

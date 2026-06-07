@@ -1,4 +1,5 @@
-/* Arquivo CSS Global */
+@import "tailwindcss";
+@import "@nuxt/ui";
 
 :root {
   /* Defina aqui variáveis CSS globais necessárias */

@@ -8,4 +8,4 @@ Este diretório contém augmentations TypeScript globais ou específicas de fram
 ## Padrões Recomendados
 - Use arquivos `.d.ts` apenas para augmentations globais ou de módulos.
 - Sempre finalize arquivos de augmentation com `export {}` para garantir escopo de módulo.
-- Ao adicionar novas chaves de `definePageMeta`, atualize este diretório e o [middleware/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/middleware/AGENT.md).
+- Ao adicionar novas chaves de `definePageMeta`, atualize este diretório e o [app/middleware/AGENT.md](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/middleware/AGENT.md).

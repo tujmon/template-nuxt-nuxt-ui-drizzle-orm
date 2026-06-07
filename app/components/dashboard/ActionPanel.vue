@@ -22,7 +22,7 @@ const statusOptions = ['Ativo', 'Ausente', 'Em Reunião', 'Focado']
             v-for="opt in statusOptions"
             :key="opt"
             variant="soft"
-            color="gray"
+            color="neutral"
             size="xs"
             @click="emit('update-status', opt)"
           >

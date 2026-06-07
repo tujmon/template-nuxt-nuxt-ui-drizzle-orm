@@ -23,7 +23,7 @@ useSeoMeta({
         <UButton to="/dashboard" size="lg" icon="i-heroicons-squares-2x2">
           Ir para o Dashboard
         </UButton>
-        <UButton to="/register" color="gray" variant="ghost" size="lg">
+        <UButton to="/register" color="neutral" variant="ghost" size="lg">
           Criar uma Conta
         </UButton>
       </div>
