@@ -11,6 +11,8 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - [docs/invariants.md](docs/invariants.md): regras que não devem ser quebradas.
 - [docs/agent-recipes.md](docs/agent-recipes.md): receitas para tarefas comuns.
 - [docs/ui-standards.md](docs/ui-standards.md): padrões de interface, ações, botões, modais, feedback e fluxos.
+- [.agents/skills/nuxt-server-creation/SKILL.md](.agents/skills/nuxt-server-creation/SKILL.md): skill para criação server-side, APIs, domínio, banco, seeds e testes.
+- [.agents/skills/nuxt-ui-creation/SKILL.md](.agents/skills/nuxt-ui-creation/SKILL.md): skill para criação de páginas, componentes, fluxos e temas com Nuxt UI 4.
 
 ## Guias Por Diretório
 - [server/database/AGENT.md](server/database/AGENT.md): conexão, schema, migrations e banco.
@@ -59,10 +61,17 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - O Better Auth Admin está habilitado com banimento, roles e impersonation. Impersonation usa sessão temporária com `session.impersonatedBy`; mantenha essa coluna no schema/migrations.
 - Antes de criar ou alterar interfaces, siga [docs/ui-standards.md](docs/ui-standards.md) para posicionamento de ações, hierarquia de botões, feedback e fluxos.
 
+## Skills Do Projeto
+- Use `nuxt-server-creation` para mudanças em `server/`, `shared/validation`, banco, seed, API, auth/admin server-side e testes de backend.
+- Use `nuxt-ui-creation` para mudanças em `app/pages`, `app/components`, `app/composables`, layouts, temas, estados visuais, formulários, tabelas, modais e fluxos do usuário.
+- Quando uma feature atravessar UI e servidor, carregue as duas skills e implemente em fatias verticais: contrato Zod, serviço/API, UI consumidora e testes.
+- Consulte `nuxt-ui.md` como referência local da documentação do Nuxt UI, mas extraia apenas a seção do componente necessário para evitar copiar padrões de versões ou contextos não usados.
+
 ## Checklist Obrigatório Para Agentes
 - Leia [docs/invariants.md](docs/invariants.md) antes de criar padrões novos.
 - Use as receitas em [docs/agent-recipes.md](docs/agent-recipes.md) para endpoints, páginas, envs, seeds e schemas.
 - Use [docs/ui-standards.md](docs/ui-standards.md) para mudanças visuais, fluxos do usuário e ações.
+- Use as skills em `.agents/skills/` quando a tarefa for criação server-side ou criação de UI.
 - Rode `npm run agent:check` antes de finalizar uma mudança.
 - Se `agent:check` falhar por banco indisponível, suba `POSTGRES_PORT=5433 npm run db:up` e rode novamente.
 - Não contorne testes de arquitetura sem atualizar explicitamente os invariantes do projeto.

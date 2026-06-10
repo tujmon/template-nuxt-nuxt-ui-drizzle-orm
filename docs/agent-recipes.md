@@ -13,10 +13,12 @@ Receitas rápidas para manter agentes de IA dentro dos padrões do template.
 
 ## Adicionar Página
 
-1. Crie a página em `pages/`.
+1. Crie a página em `app/pages/`.
 2. Declare `definePageMeta({ auth: 'public' | 'guest' | 'protected' })`.
-3. Use layouts e componentes existentes antes de criar novos padrões visuais.
-4. Evite lógica de domínio dentro da página; extraia para composables ou services conforme o lado.
+3. Em páginas admin, adicione também `middleware: 'admin'`.
+4. Use layouts e componentes existentes antes de criar novos padrões visuais.
+5. Evite lógica de domínio dentro da página; extraia para composables ou services conforme o lado.
+6. Siga `docs/ui-standards.md` e os padrões atuais do Nuxt UI 4: `UFormField`, `UTable :data`, `UDropdownMenu`, `USelect :items` e `UModal` com slots nomeados.
 
 ## Adicionar Variável De Ambiente
 
@@ -39,6 +41,12 @@ Receitas rápidas para manter agentes de IA dentro dos padrões do template.
 2. Exporte o tipo com `z.infer`.
 3. Use o mesmo schema no formulário e no endpoint quando o contrato for compartilhado.
 4. Mensagens de erro devem ser úteis para o usuário ou consumidor da API.
+
+## Escolher Skill De Criação
+
+- Para server-side, use `.agents/skills/nuxt-server-creation/SKILL.md`.
+- Para UI, use `.agents/skills/nuxt-ui-creation/SKILL.md`.
+- Para uma feature full-stack, use as duas e valide o contrato entre formulário, endpoint e service.
 
 ## Antes De Finalizar
 
