@@ -31,6 +31,22 @@ Estas regras existem para evitar mudanças locais que quebram o desenho global d
 - Scripts operacionais ficam em TypeScript e rodam via `tsx`.
 - Dados obrigatórios ficam em `system.seed.ts`; dados fictícios ficam em `demo.seed.ts`.
 - Usuários Better Auth devem usar `hashPassword` de `better-auth/crypto`.
+- **Integridade de Chaves Estrangeiras:** Toda nova chave estrangeira (FK) declarada em esquemas do Drizzle deve obrigatoriamente especificar o comportamento `onDelete` (use `'cascade'` para relacionamentos fortemente dependentes ou `'set null'`/`'restrict'` quando apropriado). Nunca deixe o comportamento padrão implícito do banco.
+- **Transações em Lógica de Negócios:** Múltiplas mutações ou rollups acumulados no banco de dados devem ocorrer de forma atômica no banco utilizando o helper `runInTransaction` de `server/database/transaction.ts`.
+
+## Controle de Acesso e Permissões por Recurso
+
+- Permissões em controles de UI, como botões, CTAs, itens de menu, ações de tabela e dropdowns, controlam apenas visibilidade ou estado visual. Toda ação sensível também deve ser autorizada no servidor, em API/service/admin client adequado.
+- **Autorização por Recurso (Server-Side Resource Check):** É proibido validar permissões sensíveis diretamente em handlers com validações globais como `session.user.role !== 'admin'` para ações de instâncias específicas (ex: alterar dados de um projeto). Toda validação baseada no relacionamento entre o usuário e a entidade do recurso (como Supervisor, Dono ou Membro) deve ser delegada a uma função do Service correspondente (ex: `projetoService.assertCanUpdateProject(...)`) antes de executar a mutação.
+
+## Máquinas de Estado e Transições de Status
+
+- Entidades que possuem ciclos de vida complexos (ex: Status de Projetos, Processo de Votação, Triagem Hospitalar) devem passar por validações de estado rígidas. 
+- Mutações de status não devem ser expostas em rotas PATCH genéricas. Crie controladores ou endpoints de transição operacionais focados (ex: `/api/v1/projects/[id]/transition`) e implemente o dicionário de transições permitidas no modelo de domínio de forma determinística.
+
+## Fontes e Customizações Visuais
+
+- Fontes de texto personalizadas devem ser integradas ao ecossistema usando o módulo `@nuxt/fonts` ou declaradas centralizadamente através do arquivo de temas e presets do Nuxt UI. É proibido injetar tags `<link>` de fontes de forma estática no head global do `nuxt.config.ts`.
 
 ## Qualidade
 
@@ -54,4 +70,5 @@ Estas regras existem para evitar mudanças locais que quebram o desenho global d
 
 - A interface pública e o painel de administração devem ser mantidos estritamente em **Português (pt-BR)**.
 - Mensagens de validação Zod, avisos de erro, toasts e descrições de tela não devem conter termos em inglês ou outros idiomas de forma arbitrária nas superfícies visíveis.
+
 

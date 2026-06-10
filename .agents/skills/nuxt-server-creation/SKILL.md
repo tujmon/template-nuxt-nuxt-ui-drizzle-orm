@@ -40,15 +40,20 @@ Before creating a new server pattern, search for an existing one:
 - Validate inputs with shared Zod schemas (written strictly in **Português (pt-BR)**) and return HTTP 400 with formatted validation errors.
 - Use `auth.api.getSession({ headers: toWebRequest(event).headers })` for authenticated endpoints.
 - Never trust a user id from the client when the action targets the current user; use `session.user.id`.
+- **Autorização por Recurso:** Handlers não devem realizar validações brutas de acesso a recursos específicos. Delegue isso aos respectivos serviços chamando métodos de asserção (ex: `projetoService.assertCanUpdateProject({ projectId, userId })`).
 - Use `assertRateLimit` on public or sensitive endpoints.
 - **Error Handling:** Services must throw clean description-only errors (`throw new Error('clean message')`). Handlers must catch service errors, assign appropriate HTTP status codes (e.g. 400, 404), and throw `createError({ statusCode, message })` using clean user-facing messages. Prefer `message` over `statusMessage`.
 - Do not import Drizzle schema or `db` directly in normal API handlers.
+- **Transações:** Use `runInTransaction(async (tx) => { ... })` em `server/database/transaction.ts` para processos que executam múltiplas modificações.
+- **Máquina de Estados:** Status e transições de ciclo de vida de entidades complexas devem residir estritamente no modelo do domínio e expostos através de endpoints dedicados (e não patches genéricos).
 
 ## Database checklist
 
 - Do not create parallel database clients.
 - Keep Better Auth schema fields compatible with the enabled plugins, including admin fields and `session.impersonatedBy`.
+- **Integridade de Chaves Estrangeiras:** Defina explicitamente o comportamento `onDelete` (ex: `onDelete: 'cascade'` ou `onDelete: 'set null'`) para qualquer chave estrangeira introduzida nas tabelas.
 - After schema changes, run `npm run db:generate` and inspect the generated migration.
+
 - For seed data, keep scripts idempotent and preserve the production guard.
 
 ## Validation

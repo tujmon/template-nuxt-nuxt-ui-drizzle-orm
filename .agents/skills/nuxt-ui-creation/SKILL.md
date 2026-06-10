@@ -59,6 +59,10 @@ Before creating a new UI pattern, search for an existing one:
 - Avoid cards inside cards.
 - Keep actions close to the data or flow they affect.
 - Use scoped component CSS only when utilities and theme slots are not enough.
+- **Tipografia:** Fontes personalizadas devem usar o ecossistema `@nuxt/fonts` ou arquivo de temas; nunca injeção direta de link HTML.
+- **Optimistic UI:** Ao implementar feedback instantâneo de interface (ex: boards ou feeds), forneça obrigatoriamente um rollback explícito do estado reativo no bloco `catch` em caso de erro da chamada da API.
+- **Componentes Recursivos:** Devem usar propriedades limites de profundidade (`depth`) e critérios determinísticos de parada `v-if` para evitar travamentos do navegador.
+
 
 ## Validation
 
