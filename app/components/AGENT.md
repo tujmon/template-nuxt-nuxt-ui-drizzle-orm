@@ -14,6 +14,8 @@ Este diretório contém os componentes reutilizáveis da interface visual.
 - **Props e Emits Fortes**: Sempre declare as propriedades e eventos usando interfaces TypeScript e macros nativas do Vue (`defineProps` e `defineEmits`).
 - **Nuxt UI 4**: Use componentes e props atuais (`UFormField`, `UDropdownMenu`, `USelect :items`). `UModal` deve receber conteúdo por slots nomeados, normalmente `#content`; o slot default é tratado como trigger.
 - **Padrão de UI**: Siga [docs/ui-standards.md](docs/ui-standards.md) para ações, botões, modais, feedback e alinhamentos.
+- **Permissões Em Controles**: Botões, CTAs, itens de menu, ações de tabela e dropdowns podem usar `useAuthSession` para derivar `can*` computeds e controlar visibilidade/estado. Isso não substitui autorização no servidor; toda mutação sensível precisa continuar protegida por API, service ou Better Auth Admin.
+- **Ações Sem Permissão**: Em menus, toolbars e tabelas, prefira omitir ações indisponíveis. Use botão desabilitado apenas quando a ausência da ação confundiria o usuário.
 - **Organização**:
   - Componentes de uso geral do sistema (ex: inputs customizados, botões específicos, cards genéricos) devem ser criados sob uma pasta `common/`.
   - Componentes específicos de uma funcionalidade devem ser organizados em pastas nomeadas de acordo (ex: `auth/`, `dashboard/`).

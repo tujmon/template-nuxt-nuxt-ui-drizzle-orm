@@ -31,6 +31,14 @@ Before creating a new UI pattern, search for an existing one:
 4. Keep pages as orchestration. Move repeated or complex UI into `app/components/<feature>`.
 5. Put client-side reusable state and actions in `app/composables`.
 
+## Control permissions
+
+- Use route middleware for page access and button/menu/control permissions only for local UI visibility or disabled state.
+- Buttons, CTAs, table actions, dropdown items, and toolbar controls that depend on the logged-in user must use `useAuthSession`; do not call `authClient.useSession(useFetch)` directly.
+- Derive named `can*` booleans in `<script setup>` for role checks, for example `canManageUsers`, then use them in templates.
+- Prefer omitting unavailable contextual actions from menus. Use disabled controls only when visible denial is useful to the user.
+- Never treat `v-if`, hidden buttons, or disabled buttons as authorization. Sensitive mutations must also be enforced by the server endpoint, service, or Better Auth Admin call.
+
 ## Nuxt UI v4 patterns
 
 - Keep `app/app.vue` wrapped with `UApp`; toasts, tooltips, and programmatic overlays depend on it.

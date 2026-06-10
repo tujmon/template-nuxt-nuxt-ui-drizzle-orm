@@ -12,9 +12,11 @@ Estas regras existem para evitar mudanças locais que quebram o desenho global d
 
 ## Auth E Rotas
 
-- Toda página em `pages/` deve declarar `definePageMeta({ auth })`.
+- Toda página em `app/pages/` deve declarar `definePageMeta({ auth })`.
 - Valores válidos de `auth`: `public`, `guest`, `protected`.
 - O middleware global assume `protected` quando o meta é omitido, mas páginas novas ainda devem ser explícitas.
+- Permissões em controles de UI, como botões, CTAs, itens de menu, ações de tabela e dropdowns, controlam apenas visibilidade ou estado visual. Toda ação sensível também deve ser autorizada no servidor, em API/service/admin client adequado.
+- Controles que precisam reagir à sessão devem usar `useAuthSession`; não devem chamar `authClient.useSession(useFetch)` diretamente.
 
 ## Configuração
 

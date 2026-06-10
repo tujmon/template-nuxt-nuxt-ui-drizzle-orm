@@ -74,6 +74,10 @@ Este documento define os padrões de interface, ações e fluxos do template. Us
 
 - Login e cadastro compartilham a mesma estrutura visual de auth.
 - O painel admin deve sempre passar por `/admin` com `auth: 'protected'` e middleware `admin`.
+- Permissões em controles de UI, como botões, CTAs, itens de menu, ações de tabela e dropdowns, devem ser usadas para esconder, mostrar ou desabilitar ações conforme a sessão atual, nunca como única barreira de segurança.
+- Para controles que dependem de role, use `useAuthSession` e derive booleans nomeados no `<script setup>` como `const canManageUsers = computed(() => session.value?.user.role === 'admin')`.
+- Ações sensíveis escondidas na UI ainda precisam ser protegidas no endpoint, service ou chamada Better Auth Admin correspondente.
+- Quando o usuário não tem permissão para uma ação contextual, prefira remover a ação do menu. Se a ação precisa aparecer para explicar indisponibilidade, use estado desabilitado com texto curto e não dispare mutação.
 - Impersonation deve:
   - ser iniciada pelo menu de ações do usuário alvo;
   - redirecionar para uma tela útil como `/dashboard`;
