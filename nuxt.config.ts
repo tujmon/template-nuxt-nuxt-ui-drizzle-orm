@@ -33,7 +33,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Keys within public are also exposed client-side
     public: {
-      authUrl: process.env.BETTER_AUTH_URL || 'http://localhost:3000'
+      authUrl: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
+      uiTheme: process.env.NUXT_UI_THEME || 'default'
     }
   },
   nitro: {

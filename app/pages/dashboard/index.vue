@@ -43,36 +43,36 @@ const handleStatusUpdate = (newStatus: string) => {
 <template>
   <div v-if="session" class="space-y-8">
     <!-- Session Banner -->
-    <div class="p-6 rounded-2xl bg-gradient-to-r from-emerald-900/30 to-teal-900/30 border border-emerald-800/40">
+    <div class="p-6 rounded-2xl bg-gradient-to-r from-primary/20 to-secondary/20 border border-accented">
       <div class="flex items-center space-x-4">
         <UAvatar :alt="session.user.name" size="lg" />
         <div>
-          <h2 class="text-xl font-bold text-white">Bem-vindo, {{ session.user.name }}!</h2>
-          <p class="text-xs text-slate-400 font-mono mt-0.5">Sessão ID: {{ session.session.id }}</p>
+          <h2 class="text-xl font-bold text-highlighted">Bem-vindo, {{ session.user.name }}!</h2>
+          <p class="text-xs text-muted font-mono mt-0.5">Sessão ID: {{ session.session.id }}</p>
         </div>
       </div>
     </div>
 
     <!-- Metadata Details -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
-        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Seu E-mail</span>
-        <span class="text-sm font-semibold text-slate-200 mt-1 block">{{ session.user.email }}</span>
+      <div class="p-6 rounded-2xl bg-elevated border border-muted">
+        <span class="text-xs font-semibold text-dimmed uppercase tracking-wider block">Seu E-mail</span>
+        <span class="text-sm font-semibold text-highlighted mt-1 block">{{ session.user.email }}</span>
       </div>
 
-      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800">
-        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Expira em</span>
-        <span class="text-sm font-semibold text-slate-200 mt-1 block">
+      <div class="p-6 rounded-2xl bg-elevated border border-muted">
+        <span class="text-xs font-semibold text-dimmed uppercase tracking-wider block">Expira em</span>
+        <span class="text-sm font-semibold text-highlighted mt-1 block">
           {{ new Date(session.session.expiresAt).toLocaleDateString() }} às {{ new Date(session.session.expiresAt).toLocaleTimeString() }}
         </span>
       </div>
 
-      <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+      <div class="p-6 rounded-2xl bg-elevated border border-muted flex items-center justify-between">
         <div>
-          <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider block">Teste de Performance</span>
-          <span class="text-xs text-slate-400 mt-1 block">Simular ação lenta (> 300ms)</span>
+          <span class="text-xs font-semibold text-dimmed uppercase tracking-wider block">Teste de Performance</span>
+          <span class="text-xs text-muted mt-1 block">Simular ação lenta (> 300ms)</span>
         </div>
-        <UButton color="warning" size="sm" icon="i-heroicons-bolt" @click="simulateHeavyTask">
+        <UButton color="warning" size="sm" icon="i-lucide-zap" @click="simulateHeavyTask">
           Testar
         </UButton>
       </div>
@@ -81,8 +81,8 @@ const handleStatusUpdate = (newStatus: string) => {
     <!-- Component Communication & TypeSafety Demo Section -->
     <div class="space-y-4">
       <div>
-        <h3 class="text-lg font-bold text-white">Comunicação e Fluxo de Dados</h3>
-        <p class="text-xs text-slate-400">Exemplo de comunicação unificada usando Props e Emits entre componentes filhos.</p>
+        <h3 class="text-lg font-bold text-highlighted">Comunicação e Fluxo de Dados</h3>
+        <p class="text-xs text-muted">Exemplo de comunicação unificada usando Props e Emits entre componentes filhos.</p>
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

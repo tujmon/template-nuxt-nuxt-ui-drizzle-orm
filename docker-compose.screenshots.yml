@@ -1,0 +1,55 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: screenshots
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "${SCREENSHOT_DOCKER_DB_PORT:-55432}:5432"
+    volumes:
+      - screenshot_postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d screenshots"]
+      interval: 2s
+      timeout: 5s
+      retries: 30
+
+  app:
+    image: node:24-alpine
+    working_dir: /workspace
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/screenshots
+      BETTER_AUTH_SECRET: screenshot-secret-random-key
+      BETTER_AUTH_URL: "${SCREENSHOT_DOCKER_BASE_URL:-http://127.0.0.1:3300}"
+      NUXT_UI_THEME: "${NUXT_UI_THEME:-default}"
+      NUXT_IGNORE_LOCK: "1"
+      NODE_ENV: production
+      ALLOW_PRODUCTION_SEED: "true"
+      STATUS_EXPOSE_DETAILS: "true"
+      RATE_LIMIT_ENABLED: "false"
+      RATE_LIMIT_WINDOW_MS: "60000"
+      RATE_LIMIT_MAX_REQUESTS: "10000"
+      TELEMETRY_RATE_LIMIT_MAX_REQUESTS: "10000"
+      HOST: 0.0.0.0
+      PORT: "3000"
+    ports:
+      - "${SCREENSHOT_DOCKER_APP_PORT:-3300}:3000"
+    volumes:
+      - .:/workspace
+      - screenshot_node_modules:/workspace/node_modules
+      - screenshot_nuxt:/workspace/.nuxt
+    command: ["node", ".output/server/index.mjs"]
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000/api/v1/status').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+
+volumes:
+  screenshot_postgres_data:
+  screenshot_node_modules:
+  screenshot_nuxt:

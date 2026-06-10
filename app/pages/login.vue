@@ -63,18 +63,18 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <div class="rounded-xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-black/30 sm:p-8">
+  <div class="rounded-xl border border-muted bg-elevated p-6 shadow-lg sm:p-8">
     <div class="mb-8 space-y-2">
       <div class="flex items-center gap-3">
-        <div class="flex size-11 items-center justify-center rounded-lg bg-emerald-400 text-lg font-black text-slate-950">
+        <div class="flex size-11 items-center justify-center rounded-lg bg-primary text-lg font-black text-inverted">
           N
         </div>
         <div>
-          <p class="text-xs font-medium uppercase tracking-wider text-emerald-300">Acesso</p>
-          <h2 class="text-2xl font-bold tracking-tight text-white">Bem-vindo de volta</h2>
+          <p class="text-xs font-medium uppercase tracking-wider text-primary">Acesso</p>
+          <h2 class="text-2xl font-bold tracking-tight text-highlighted">Bem-vindo de volta</h2>
         </div>
       </div>
-      <p class="text-sm text-slate-400">Use sua conta para continuar.</p>
+      <p class="text-sm text-muted">Use sua conta para continuar.</p>
     </div>
 
     <UAlert
@@ -82,7 +82,7 @@ const onSubmit = async () => {
       class="mb-5"
       color="error"
       variant="soft"
-      icon="i-heroicons-exclamation-triangle"
+      icon="i-lucide-triangle-alert"
       :title="errorMessage"
     />
 
@@ -92,7 +92,7 @@ const onSubmit = async () => {
           v-model="state.email"
           autocomplete="email"
           placeholder="seuemail@exemplo.com"
-          icon="i-heroicons-envelope"
+          icon="i-lucide-mail"
           size="lg"
           color="neutral"
           class="w-full"
@@ -105,7 +105,7 @@ const onSubmit = async () => {
           :type="showPassword ? 'text' : 'password'"
           autocomplete="current-password"
           placeholder="••••••••"
-          icon="i-heroicons-lock-closed"
+          icon="i-lucide-lock"
           size="lg"
           color="neutral"
           class="w-full"
@@ -117,7 +117,7 @@ const onSubmit = async () => {
               variant="ghost"
               square
               size="xs"
-              :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+              :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
               :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
               @click="showPassword = !showPassword"
             />
@@ -125,7 +125,7 @@ const onSubmit = async () => {
         </UInput>
       </UFormField>
 
-      <UButton type="submit" block size="lg" color="success" :loading="isLoading" class="mt-2">
+      <UButton type="submit" block size="lg" color="primary" :loading="isLoading" class="mt-2">
         Entrar
       </UButton>
     </UForm>
@@ -139,9 +139,9 @@ const onSubmit = async () => {
       </UButton>
     </div>
 
-    <div class="mt-6 border-t border-slate-800 pt-5 text-center text-sm text-slate-400">
+    <div class="mt-6 border-t border-muted pt-5 text-center text-sm text-muted">
       Ainda não tem conta?
-      <NuxtLink to="/register" class="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
+      <NuxtLink to="/register" class="text-primary hover:text-primary font-semibold transition-colors">
         Cadastre-se
       </NuxtLink>
     </div>

@@ -55,18 +55,18 @@ const onSubmit = async () => {
 </script>
 
 <template>
-  <div class="rounded-xl border border-slate-800 bg-slate-900/80 p-6 shadow-2xl shadow-black/30 sm:p-8">
+  <div class="rounded-xl border border-muted bg-elevated p-6 shadow-lg sm:p-8">
     <div class="mb-8 space-y-2">
       <div class="flex items-center gap-3">
-        <div class="flex size-11 items-center justify-center rounded-lg bg-emerald-400 text-lg font-black text-slate-950">
+        <div class="flex size-11 items-center justify-center rounded-lg bg-primary text-lg font-black text-inverted">
           N
         </div>
         <div>
-          <p class="text-xs font-medium uppercase tracking-wider text-emerald-300">Cadastro</p>
-          <h2 class="text-2xl font-bold tracking-tight text-white">Criar conta</h2>
+          <p class="text-xs font-medium uppercase tracking-wider text-primary">Cadastro</p>
+          <h2 class="text-2xl font-bold tracking-tight text-highlighted">Criar conta</h2>
         </div>
       </div>
-      <p class="text-sm text-slate-400">Cadastre-se para começar a usar a plataforma.</p>
+      <p class="text-sm text-muted">Cadastre-se para começar a usar a plataforma.</p>
     </div>
 
     <UAlert
@@ -74,7 +74,7 @@ const onSubmit = async () => {
       class="mb-5"
       color="error"
       variant="soft"
-      icon="i-heroicons-exclamation-triangle"
+      icon="i-lucide-triangle-alert"
       :title="errorMessage"
     />
 
@@ -84,7 +84,7 @@ const onSubmit = async () => {
           v-model="state.name"
           autocomplete="name"
           placeholder="Seu nome completo"
-          icon="i-heroicons-user"
+          icon="i-lucide-user"
           size="lg"
           color="neutral"
           class="w-full"
@@ -96,7 +96,7 @@ const onSubmit = async () => {
           v-model="state.email"
           autocomplete="email"
           placeholder="seuemail@exemplo.com"
-          icon="i-heroicons-envelope"
+          icon="i-lucide-mail"
           size="lg"
           color="neutral"
           class="w-full"
@@ -109,7 +109,7 @@ const onSubmit = async () => {
           :type="showPassword ? 'text' : 'password'"
           autocomplete="new-password"
           placeholder="••••••••"
-          icon="i-heroicons-lock-closed"
+          icon="i-lucide-lock"
           size="lg"
           color="neutral"
           class="w-full"
@@ -121,7 +121,7 @@ const onSubmit = async () => {
               variant="ghost"
               square
               size="xs"
-              :icon="showPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+              :icon="showPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
               :aria-label="showPassword ? 'Ocultar senha' : 'Mostrar senha'"
               @click="showPassword = !showPassword"
             />
@@ -135,7 +135,7 @@ const onSubmit = async () => {
           :type="showConfirmPassword ? 'text' : 'password'"
           autocomplete="new-password"
           placeholder="••••••••"
-          icon="i-heroicons-lock-closed"
+          icon="i-lucide-lock"
           size="lg"
           color="neutral"
           class="w-full"
@@ -147,7 +147,7 @@ const onSubmit = async () => {
               variant="ghost"
               square
               size="xs"
-              :icon="showConfirmPassword ? 'i-heroicons-eye-slash' : 'i-heroicons-eye'"
+              :icon="showConfirmPassword ? 'i-lucide-eye-off' : 'i-lucide-eye'"
               :aria-label="showConfirmPassword ? 'Ocultar confirmação de senha' : 'Mostrar confirmação de senha'"
               @click="showConfirmPassword = !showConfirmPassword"
             />
@@ -155,14 +155,14 @@ const onSubmit = async () => {
         </UInput>
       </UFormField>
 
-      <UButton type="submit" block size="lg" color="success" :loading="isLoading" class="mt-2">
+      <UButton type="submit" block size="lg" color="primary" :loading="isLoading" class="mt-2">
         Registrar
       </UButton>
     </UForm>
 
-    <div class="mt-6 border-t border-slate-800 pt-5 text-center text-sm text-slate-400">
+    <div class="mt-6 border-t border-muted pt-5 text-center text-sm text-muted">
       Já possui uma conta?
-      <NuxtLink to="/login" class="text-emerald-400 hover:text-emerald-300 font-semibold transition-colors">
+      <NuxtLink to="/login" class="text-primary hover:text-primary font-semibold transition-colors">
         Entrar
       </NuxtLink>
     </div>

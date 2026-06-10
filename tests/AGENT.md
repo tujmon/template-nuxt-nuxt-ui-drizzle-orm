@@ -7,7 +7,7 @@ Este diretório contém os testes automatizados da aplicação usando **Vitest**
 - **Executar testes em modo Watch**: `npx vitest` (executa e escuta modificações nos arquivos).
 
 ## Ambiente
-- O Vitest carrega `.env.test` automaticamente via [vitest.config.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/vitest.config.ts).
+- O Vitest carrega `.env.test` automaticamente via [vitest.config.ts](vitest.config.ts).
 - `.env.test` usa `DATABASE_URL=postgresql://postgres:postgres@localhost:5433/db`.
 - Suba o banco de teste com `POSTGRES_PORT=5433 npm run db:up`.
 - Os arquivos de teste rodam sem paralelismo de arquivo para evitar disputa pelo mesmo pool/conexão.

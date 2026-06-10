@@ -3,7 +3,7 @@
 Este diretório contém utilitários compartilhados do lado do cliente.
 
 ## Estrutura Atual
-- [auth-client.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/utils/auth-client.ts): Cliente Better Auth para Vue com plugin `adminClient`.
+- [auth-client.ts](app/utils/auth-client.ts): Cliente Better Auth para Vue com plugin `adminClient`.
 
 ## Padrões Recomendados
 - Mantenha utilitários client-side separados de `server/utils`.

@@ -2,7 +2,7 @@
 @import "@nuxt/ui";
 
 :root {
-  /* Defina aqui variáveis CSS globais necessárias */
+  /* Global CSS variables that are not covered by app.config.ts belong here. */
 }
 
 body {

@@ -64,14 +64,14 @@ const handleCreateUser = async () => {
 <template>
   <UModal v-model:open="isOpen">
     <template #content>
-      <UCard class="bg-slate-900 border-slate-800">
+      <UCard class="bg-elevated border-muted">
         <template #header>
           <div class="flex items-center justify-between">
-            <h3 class="text-base font-semibold leading-6 text-white">Criar Novo Usuário</h3>
+            <h3 class="text-base font-semibold leading-6 text-highlighted">Criar Novo Usuário</h3>
             <UButton
               color="neutral"
               variant="ghost"
-              icon="i-heroicons-x-mark"
+              icon="i-lucide-x"
               class="-my-1"
               @click="isOpen = false"
             />
@@ -102,7 +102,7 @@ const handleCreateUser = async () => {
 
           <div class="flex justify-end gap-3 pt-4">
             <UButton color="neutral" variant="ghost" @click="isOpen = false">Cancelar</UButton>
-            <UButton type="submit" color="success" :loading="creatingUser">Criar</UButton>
+            <UButton type="submit" color="primary" :loading="creatingUser">Criar</UButton>
           </div>
         </form>
       </UCard>

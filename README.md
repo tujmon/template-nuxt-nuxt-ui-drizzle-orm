@@ -116,6 +116,27 @@ SCREENSHOT_OUTPUT_DIR=screenshots-local npm run screenshots
 
 Se `SCREENSHOT_BASE_URL` já estiver respondendo, o script usa o servidor existente. Caso contrário, ele inicia o Nuxt dev server automaticamente.
 
+Para uma captura reprodutível com banco próprio, build de produção, migrations, seed reset e healthcheck antes dos prints, use o compose isolado:
+
+```bash
+npm run screenshots:docker
+```
+
+Esse fluxo usa `docker-compose.screenshots.yml`, sobe Postgres em `SCREENSHOT_DOCKER_DB_PORT` (`55432` por padrão), publica o app em `SCREENSHOT_DOCKER_APP_PORT` (`3300` por padrão), roda `npm ci`, `db:migrate`, `db:seed:reset`, `build`, espera `/api/v1/status` responder e então captura as páginas. Para validar todos os temas no mesmo modelo isolado:
+
+```bash
+npm run screenshots:themes:docker
+```
+
+Variáveis úteis:
+
+```bash
+NUXT_UI_THEME=sunset npm run screenshots:docker
+SCREENSHOT_THEMES=default,sunset npm run screenshots:themes:docker
+SCREENSHOT_DOCKER_APP_PORT=3310 SCREENSHOT_DOCKER_DB_PORT=55433 npm run screenshots:docker
+SCREENSHOT_DOCKER_KEEP_ALIVE=true npm run screenshots:docker
+```
+
 ## Qualidade
 
 ```bash

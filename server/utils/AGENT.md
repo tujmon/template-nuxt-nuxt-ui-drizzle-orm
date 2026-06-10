@@ -3,11 +3,11 @@
 Este diretório contém utilitários server-side compartilhados por handlers, services e infraestrutura.
 
 ## Estrutura Atual
-- [auth.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/utils/auth.ts): Configuração Better Auth com adapter Drizzle e plugin Admin.
-- [env.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/utils/env.ts): Validação Zod das variáveis de ambiente do servidor.
-- [rate-limit.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/utils/rate-limit.ts): Rate limit simples em memória por IP.
-- [logger.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/utils/logger.ts): Sistema de logs estruturado baseado em `consola`.
-- [scheduler.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/utils/scheduler.ts): Utilitário de execução de tarefas programadas com controle de trava (concurrency lock) e diagnósticos persistidos em banco.
+- [auth.ts](server/utils/auth.ts): Configuração Better Auth com adapter Drizzle e plugin Admin.
+- [env.ts](server/utils/env.ts): Validação Zod das variáveis de ambiente do servidor.
+- [rate-limit.ts](server/utils/rate-limit.ts): Rate limit simples em memória por IP.
+- [logger.ts](server/utils/logger.ts): Sistema de logs estruturado baseado em `consola`.
+- [scheduler.ts](server/utils/scheduler.ts): Utilitário de execução de tarefas programadas com controle de trava (concurrency lock) e diagnósticos persistidos em banco.
 
 ## Padrões Recomendados
 - Valide novas envs em `env.ts` antes de usar em código servidor.

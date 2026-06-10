@@ -8,6 +8,16 @@ Este documento define os padrões de interface, ações e fluxos do template. Us
 - Ações devem aparecer perto do contexto que afetam.
 - O usuário sempre deve saber: onde está, qual ação principal existe, o que mudou depois de clicar e como desfazer/sair quando aplicável.
 - Prefira componentes Nuxt UI e classes Tailwind utilitárias. Não crie CSS global para comportamento específico de uma tela.
+- O tema visual do Nuxt UI fica em `app/themes/`: cores semânticas, ícones padrão, variantes globais e overrides de slots compartilhados. `app/app.config.ts` apenas aplica o preset ativo.
+- Use tokens semânticos (`text-default`, `text-muted`, `text-highlighted`, `bg-default`, `bg-elevated`, `border-muted`) em vez de palettes cruas (`slate`, `emerald`, `gray`, `zinc`) em novas telas.
+
+## Temas
+
+- Troque o tema de build com `NUXT_UI_THEME=default npm run dev`, `NUXT_UI_THEME=ocean npm run build` ou qualquer preset registrado em `app/themes/index.ts`.
+- Valide os temas registrados com `npm run screenshots:themes`; as imagens ficam em `screenshots/themes/<tema>/`.
+- Para criar um tema, copie um preset em `app/themes/presets/`, exporte-o em `app/themes/index.ts` e altere apenas tokens semânticos (`primary`, `secondary`, `neutral`, etc.) e overrides globais de componentes.
+- Use palettes existentes do Tailwind quando possível. Para uma cor de marca própria, declare as 11 shades em `app/assets/css/main.css` usando `@theme static` e depois referencie o nome da cor no preset.
+- Componentes e páginas não devem importar presets diretamente; eles consomem o tema por classes semânticas e props do Nuxt UI.
 
 ## Estrutura de Página
 

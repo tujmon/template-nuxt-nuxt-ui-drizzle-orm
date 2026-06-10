@@ -77,21 +77,21 @@ describe('project architecture guardrails', () => {
 
   it('keeps runtime app code free from console calls', () => {
     const runtimeConsoleViolations = sourceFiles(
-      'components',
-      'composables',
-      'layouts',
-      'middleware',
-      'pages',
+      'app/components',
+      'app/composables',
+      'app/layouts',
+      'app/middleware',
+      'app/pages',
+      'app/utils',
       'server',
-      'shared',
-      'utils'
+      'shared'
     ).filter(filePath => /\bconsole\./.test(readProjectFile(filePath)))
 
     expect(runtimeConsoleViolations).toEqual([])
   })
 
   it('requires explicit auth metadata on every page', () => {
-    const pageMetaViolations = listFiles('pages')
+    const pageMetaViolations = listFiles('app/pages')
       .filter(filePath => filePath.endsWith('.vue'))
       .filter((filePath) => {
         const contents = readProjectFile(filePath)
@@ -101,11 +101,59 @@ describe('project architecture guardrails', () => {
     expect(pageMetaViolations).toEqual([])
   })
 
+  it('wraps the Nuxt app with Nuxt UI UApp', () => {
+    expect(existsSync(join(projectRoot, 'app/app.vue'))).toBe(true)
+    expect(readProjectFile('app/app.vue')).toContain('<UApp>')
+  })
+
+  it('centralizes Nuxt UI theme configuration in app.config.ts', () => {
+    expect(existsSync(join(projectRoot, 'app/app.config.ts'))).toBe(true)
+    expect(existsSync(join(projectRoot, 'app/themes/index.ts'))).toBe(true)
+    expect(existsSync(join(projectRoot, 'app/plugins/theme.ts'))).toBe(true)
+
+    const contents = readProjectFile('app/app.config.ts')
+    const plugin = readProjectFile('app/plugins/theme.ts')
+    const nuxtConfig = readProjectFile('nuxt.config.ts')
+
+    expect(contents).toContain('defineAppConfig')
+    expect(plugin).toContain('updateAppConfig')
+    expect(plugin).toContain('getAppTheme')
+    expect(nuxtConfig).toContain('uiTheme')
+    expect(nuxtConfig).toContain('NUXT_UI_THEME')
+  })
+
+  it('keeps agent documentation workspace-relative', () => {
+    const absoluteAgentLinks = listFiles('.')
+      .filter(filePath => filePath.endsWith('AGENT.md'))
+      .filter(filePath => readProjectFile(filePath).includes('file:///Users/'))
+
+    expect(absoluteAgentLinks).toEqual([])
+  })
+
   it('keeps operational scripts in TypeScript', () => {
     const scriptViolations = listFiles('scripts')
       .filter(filePath => /\.(js|mjs|cjs)$/.test(filePath))
 
     expect(scriptViolations).toEqual([])
+  })
+
+  it('keeps screenshot automation isolated from the default dev database', () => {
+    expect(existsSync(join(projectRoot, 'docker-compose.screenshots.yml'))).toBe(true)
+    expect(existsSync(join(projectRoot, 'scripts/screenshot-docker.ts'))).toBe(true)
+
+    const packageJson = readProjectFile('package.json')
+    const composeFile = readProjectFile('docker-compose.screenshots.yml')
+    const dockerScript = readProjectFile('scripts/screenshot-docker.ts')
+
+    expect(packageJson).toContain('screenshots:docker')
+    expect(packageJson).toContain('screenshots:themes:docker')
+    expect(composeFile).toContain('SCREENSHOT_DOCKER_APP_PORT')
+    expect(composeFile).toContain('SCREENSHOT_DOCKER_DB_PORT')
+    expect(composeFile).toContain('screenshot_postgres_data')
+    expect(composeFile).toContain('/api/v1/status')
+    expect(dockerScript).toContain('db:seed:reset')
+    expect(dockerScript).toContain('SCREENSHOT_START_SERVER')
+    expect(dockerScript).toContain('waitForStatus')
   })
 
   it('documents server environment variables in example env files', () => {

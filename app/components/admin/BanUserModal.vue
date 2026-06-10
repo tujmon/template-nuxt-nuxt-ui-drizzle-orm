@@ -59,14 +59,14 @@ const confirmBan = async () => {
 <template>
   <UModal v-model:open="isOpen">
     <template #content>
-      <UCard class="bg-slate-900 border-slate-800">
+      <UCard class="bg-elevated border-muted">
         <template #header>
           <div class="flex items-center justify-between">
-            <h3 class="text-base font-semibold leading-6 text-white">Banir Usuário</h3>
+            <h3 class="text-base font-semibold leading-6 text-highlighted">Banir Usuário</h3>
             <UButton
               color="neutral"
               variant="ghost"
-              icon="i-heroicons-x-mark"
+              icon="i-lucide-x"
               class="-my-1"
               @click="isOpen = false"
             />
@@ -74,8 +74,8 @@ const confirmBan = async () => {
         </template>
 
         <div class="space-y-4">
-          <p class="text-sm text-slate-300">
-            Tem certeza de que deseja banir <span class="font-bold text-white">{{ user?.name }}</span>? Este usuário perderá acesso imediato ao aplicativo.
+          <p class="text-sm text-toned">
+            Tem certeza de que deseja banir <span class="font-bold text-highlighted">{{ user?.name }}</span>? Este usuário perderá acesso imediato ao aplicativo.
           </p>
           <UFormField label="Motivo (opcional)">
             <UInput v-model="banReason" placeholder="Ex: Violação dos termos de uso" color="neutral" class="w-full" />

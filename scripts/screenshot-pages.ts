@@ -100,9 +100,11 @@ const startServer = async (): Promise<ChildProcess | null> => {
       env: {
         ...process.env,
         BETTER_AUTH_URL: baseUrl,
+        NUXT_IGNORE_LOCK: process.env.NUXT_IGNORE_LOCK || '1',
         NUXT_PORT: url.port || '3000',
         TMPDIR: process.env.TMPDIR || '/tmp'
       },
+      detached: true,
       stdio: 'inherit'
     }
   )
@@ -234,7 +236,13 @@ const main = async () => {
     }
   } finally {
     await browser.close()
-    server?.kill()
+    if (server?.pid) {
+      try {
+        process.kill(-server.pid, 'SIGTERM')
+      } catch {
+        // The dev server may already have exited.
+      }
+    }
   }
 
   console.log(`Saved ${targets.length * (users.length + 1)} screenshots in ${relative(rootDir, outputDir)}`)

@@ -3,8 +3,8 @@
 Este diretório contém middlewares de rota do Nuxt.
 
 ## Estrutura Atual
-- [auth.global.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/middleware/auth.global.ts): Middleware global de autenticação baseado em `definePageMeta`.
-- [admin.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/middleware/admin.ts): Middleware de role admin para páginas administrativas.
+- [auth.global.ts](app/middleware/auth.global.ts): Middleware global de autenticação baseado em `definePageMeta`.
+- [admin.ts](app/middleware/admin.ts): Middleware de role admin para páginas administrativas.
 
 ## Padrões Recomendados
 - Configure acesso por página com `definePageMeta({ auth: 'public' | 'guest' | 'protected' })`.

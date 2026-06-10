@@ -51,17 +51,17 @@ const columns: ColumnDef<AdminUser>[] = [
 const getActions = (row: AdminUser) => [[
   {
     label: row.role === 'admin' ? 'Tornar Usuário Comum' : 'Tornar Administrador',
-    icon: row.role === 'admin' ? 'i-heroicons-user' : 'i-heroicons-shield-check',
+    icon: row.role === 'admin' ? 'i-lucide-user' : 'i-lucide-shield-check',
     onSelect: () => changeRole(row, row.role === 'admin' ? 'user' : 'admin')
   },
   {
     label: 'Impersonar Usuário',
-    icon: 'i-heroicons-arrow-right-on-rectangle',
+    icon: 'i-lucide-log-in',
     onSelect: () => impersonateUser(row)
   },
   {
     label: row.banned ? 'Desbanir Usuário' : 'Banir Usuário',
-    icon: row.banned ? 'i-heroicons-check-circle' : 'i-heroicons-no-symbol',
+    icon: row.banned ? 'i-lucide-circle-check' : 'i-lucide-ban',
     onSelect: () => row.banned ? unbanUser(row) : openBanModal(row)
   }
 ]]
@@ -77,12 +77,12 @@ onMounted(() => {
     <!-- Header -->
     <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:justify-between">
       <div>
-        <h1 class="text-2xl font-bold text-white">Administração de Usuários</h1>
-        <p class="text-sm text-slate-400">Gerencie usuários, cargos, banimentos e simule sessões utilizando o Better Auth.</p>
+        <h1 class="text-2xl font-bold text-highlighted">Administração de Usuários</h1>
+        <p class="text-sm text-muted">Gerencie usuários, cargos, banimentos e simule sessões utilizando o Better Auth.</p>
       </div>
       <UButton
         color="success"
-        icon="i-heroicons-user-plus"
+        icon="i-lucide-user-plus"
         class="w-auto shrink-0"
         @click="createUserModalOpen = true"
       >
@@ -91,19 +91,19 @@ onMounted(() => {
     </div>
 
     <!-- Filters and Table Card -->
-    <UCard class="bg-slate-900 border-slate-800" :ui="{ body: 'p-0' }">
+    <UCard class="bg-elevated border-muted" :ui="{ body: 'p-0' }">
       <template #header>
         <div class="flex items-center justify-between gap-4 p-4">
           <UInput
             v-model="searchQuery"
-            icon="i-heroicons-magnifying-glass"
+            icon="i-lucide-search"
             placeholder="Buscar por nome ou e-mail..."
             class="max-w-xs w-full"
             color="neutral"
             @input="triggerSearch"
           />
-          <div class="text-xs text-slate-400">
-            Total de usuários: <span class="font-bold text-slate-200">{{ totalUsers }}</span>
+          <div class="text-xs text-muted">
+            Total de usuários: <span class="font-bold text-highlighted">{{ totalUsers }}</span>
           </div>
         </div>
       </template>
@@ -115,15 +115,15 @@ onMounted(() => {
         :loading="loading"
         class="relative overflow-x-auto"
         :ui="{ 
-          td: 'text-slate-300',
-          th: 'text-slate-400'
+          td: 'text-toned',
+          th: 'text-muted'
         }"
       >
         <!-- Custom Name / Avatar Slot -->
         <template #name-cell="{ row }">
           <div class="flex items-center space-x-3">
             <UAvatar :alt="row.original.name" :src="row.original.image || undefined" size="sm" />
-            <div class="font-medium text-slate-200">{{ row.original.name }}</div>
+            <div class="font-medium text-highlighted">{{ row.original.name }}</div>
           </div>
         </template>
 
@@ -156,7 +156,7 @@ onMounted(() => {
             <UButton
               color="neutral"
               variant="ghost"
-              icon="i-heroicons-ellipsis-horizontal"
+              icon="i-lucide-ellipsis"
             />
           </UDropdownMenu>
         </template>

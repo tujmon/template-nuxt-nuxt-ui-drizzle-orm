@@ -5,7 +5,7 @@ Este diretório contém os manipuladores de rotas de API (Event Handlers) do bac
 ## Estrutura do Diretório
 - **auth/**: Rotas internas gerenciadas pelo Better Auth. Não mova para `v1`.
 - **v1/**: Rotas de API da aplicação versionadas.
-  - [status.get.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/server/api/v1/status.get.ts): status operacional do app e do PostgreSQL.
+  - [status.get.ts](server/api/v1/status.get.ts): status operacional do app e do PostgreSQL.
   - **users/**: Endpoints de usuário autenticado.
 - **telemetry/**: Endpoints técnicos de telemetria. O endpoint atual é opcional e recebe métricas de performance validadas.
 

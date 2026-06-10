@@ -3,9 +3,9 @@
 Este diretório contém composables reutilizáveis da aplicação.
 
 ## Estrutura Atual
-- [performance-measure.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/composables/performance-measure.ts): Mede ações no cliente usando User Timing API e pode reportar métricas ao endpoint de telemetria.
-- [useAuthSession.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/composables/useAuthSession.ts): Wrapper para `useSession` do Better Auth integrado com `useFetch` do Nuxt para garantir SSR-safety e desduplicação de chamadas.
-- [useAdminActions.ts](file:///Users/arthur/Documents/template-nuxt-nuxt-ui-drizzle-orm/app/composables/useAdminActions.ts): Ações client-side do painel admin, incluindo listagem, roles, banimento, desbanimento e impersonation.
+- [performance-measure.ts](app/composables/performance-measure.ts): Mede ações no cliente usando User Timing API e pode reportar métricas ao endpoint de telemetria.
+- [useAuthSession.ts](app/composables/useAuthSession.ts): Wrapper para `useSession` do Better Auth integrado com `useFetch` do Nuxt para garantir SSR-safety e desduplicação de chamadas.
+- [useAdminActions.ts](app/composables/useAdminActions.ts): Ações client-side do painel admin, incluindo listagem, roles, banimento, desbanimento e impersonation.
 
 ## Padrões Recomendados
 - Composables devem ser pequenos, tipados e livres de efeitos globais inesperados.
