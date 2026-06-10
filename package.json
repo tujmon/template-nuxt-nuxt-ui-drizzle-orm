@@ -17,6 +17,7 @@
     "db:seed:system": "tsx scripts/seed/index.ts --only=system",
     "db:seed:reset": "tsx scripts/seed/index.ts --reset",
     "db:studio": "drizzle-kit studio",
+    "screenshots": "tsx scripts/screenshot-pages.ts",
     "lint": "npm run lint:eslint && npm run lint:fallow",
     "lint:eslint": "eslint .",
     "lint:fallow": "fallow --skip health",
@@ -45,6 +46,7 @@
   "devDependencies": {
     "@nuxt/eslint": "^1.15.2",
     "@nuxt/test-utils": "4.0.3",
+    "@playwright/test": "^1.59.1",
     "@types/pg": "8.20.0",
     "@vue/tsconfig": "0.9.1",
     "drizzle-kit": "0.31.10",

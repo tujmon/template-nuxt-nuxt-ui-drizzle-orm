@@ -95,6 +95,27 @@ npm test
 
 Além dos testes de integração e API, `tests/architecture` protege invariantes do template, como versionamento de rotas, uso de Zod no servidor, env centralizado e pages com `definePageMeta`.
 
+## Screenshots
+
+Gere screenshots de todas as páginas descobertas em `app/pages`:
+
+```bash
+npm run screenshots
+```
+
+O comando salva os arquivos em `screenshots/`, pasta ignorada pelo Git. Por padrão, ele captura uma sessão pública, uma sessão `user` com `demo@example.com / password123` e uma sessão `admin` com `admin@example.com / admin123`.
+
+Configurações úteis:
+
+```bash
+SCREENSHOT_BASE_URL=http://127.0.0.1:3000 npm run screenshots
+SCREENSHOT_USERS='[{"name":"qa","email":"qa@example.com","password":"secret"}]' npm run screenshots
+SCREENSHOT_ROUTE_PARAMS='{"id":"seed_user_demo"}' npm run screenshots
+SCREENSHOT_OUTPUT_DIR=screenshots-local npm run screenshots
+```
+
+Se `SCREENSHOT_BASE_URL` já estiver respondendo, o script usa o servidor existente. Caso contrário, ele inicia o Nuxt dev server automaticamente.
+
 ## Qualidade
 
 ```bash

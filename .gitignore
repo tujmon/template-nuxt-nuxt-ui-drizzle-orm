@@ -28,6 +28,9 @@ yarn-error.log*
 # Fallow local cache
 .fallow/
 
+# Generated screenshots
+screenshots/
+
 # Local database files
 *.db
 *.sqlite
