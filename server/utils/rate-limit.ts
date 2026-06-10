@@ -35,7 +35,10 @@ const getClientIp = (event: Parameters<typeof getRequestIP>[0]) => {
   return getRequestIP(event, { xForwardedFor: true }) || 'unknown'
 }
 
-export const assertRateLimit = (event: Parameters<typeof getRequestIP>[0], options: RateLimitOptions) => {
+export const assertRateLimit = (
+  event: Parameters<typeof getRequestIP>[0],
+  options: RateLimitOptions
+) => {
   if (!env.RATE_LIMIT_ENABLED) {
     return
   }

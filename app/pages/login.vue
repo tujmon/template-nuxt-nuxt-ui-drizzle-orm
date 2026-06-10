@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { loginSchema, type LoginInput } from '~~/shared/validation/auth'
-import { authClient } from '~/utils/auth-client'
 import { usePerformanceMeasure } from '~/composables/performance-measure'
+import { authClient } from '~/utils/auth-client'
+import { type LoginInput, loginSchema } from '~~/shared/validation/auth'
 
 definePageMeta({
   layout: 'auth',

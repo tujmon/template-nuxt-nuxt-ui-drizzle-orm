@@ -1,11 +1,12 @@
 import { z } from 'zod'
 
-const booleanStringSchema = (defaultValue: boolean) => z
-  .preprocess(
-    value => value ?? String(defaultValue),
-    z.union([z.boolean(), z.enum(['true', 'false'])])
-  )
-  .transform(value => value === true || value === 'true')
+const booleanStringSchema = (defaultValue: boolean) =>
+  z
+    .preprocess(
+      (value) => value ?? String(defaultValue),
+      z.union([z.boolean(), z.enum(['true', 'false'])])
+    )
+    .transform((value) => value === true || value === 'true')
 
 const serverEnvSchema = z.object({
   DATABASE_URL: z.string().url(),

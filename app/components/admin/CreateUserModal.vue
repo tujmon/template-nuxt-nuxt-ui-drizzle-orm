@@ -1,5 +1,7 @@
 <script setup lang="ts">
+import type { FormSubmitEvent } from '@nuxt/ui'
 import { authClient } from '~/utils/auth-client'
+import { type CreateUserInput, createUserSchema } from '~~/shared/validation/auth'
 
 const props = defineProps<{
   modelValue: boolean
@@ -18,30 +20,21 @@ const isOpen = computed({
 const toast = useToast()
 const creatingUser = ref(false)
 
-const newUser = reactive<{
-  name: string
-  email: string
-  password: string
-  role: 'user' | 'admin'
-}>({
+const newUser = reactive<CreateUserInput>({
   name: '',
   email: '',
   password: '',
   role: 'user'
 })
 
-const handleCreateUser = async () => {
-  if (!newUser.name || !newUser.email || !newUser.password) {
-    toast.add({ title: 'Campos obrigatórios', description: 'Preencha todos os campos.', color: 'warning' })
-    return
-  }
+const handleCreateUser = async (event: FormSubmitEvent<CreateUserInput>) => {
   creatingUser.value = true
   try {
     const { error } = await authClient.admin.createUser({
-      email: newUser.email,
-      password: newUser.password,
-      name: newUser.name,
-      role: newUser.role
+      email: event.data.email,
+      password: event.data.password,
+      name: event.data.name,
+      role: event.data.role
     })
 
     if (error) {
@@ -78,17 +71,17 @@ const handleCreateUser = async () => {
           </div>
         </template>
 
-        <form class="space-y-4" @submit.prevent="handleCreateUser">
-          <UFormField label="Nome" required>
+        <UForm :schema="createUserSchema" :state="newUser" class="space-y-4" @submit="handleCreateUser">
+          <UFormField label="Nome" name="name">
             <UInput v-model="newUser.name" placeholder="Ex: Arthur Silva" color="neutral" class="w-full" />
           </UFormField>
-          <UFormField label="E-mail" required>
+          <UFormField label="E-mail" name="email">
             <UInput v-model="newUser.email" type="email" placeholder="Ex: arthur@exemplo.com" color="neutral" class="w-full" />
           </UFormField>
-          <UFormField label="Senha" required>
+          <UFormField label="Senha" name="password">
             <UInput v-model="newUser.password" type="password" placeholder="Senha forte" color="neutral" class="w-full" />
           </UFormField>
-          <UFormField label="Cargo">
+          <UFormField label="Cargo" name="role">
             <USelect
               v-model="newUser.role"
               :items="[
@@ -104,7 +97,7 @@ const handleCreateUser = async () => {
             <UButton color="neutral" variant="ghost" @click="isOpen = false">Cancelar</UButton>
             <UButton type="submit" color="primary" :loading="creatingUser">Criar</UButton>
           </div>
-        </form>
+        </UForm>
       </UCard>
     </template>
   </UModal>

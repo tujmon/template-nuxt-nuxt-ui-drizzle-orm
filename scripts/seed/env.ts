@@ -34,7 +34,9 @@ export const loadSeedEnv = () => {
   }
 
   if (process.env.NODE_ENV === 'production' && process.env.ALLOW_PRODUCTION_SEED !== 'true') {
-    throw new Error('Refusing to run seed in production. Set ALLOW_PRODUCTION_SEED=true to override.')
+    throw new Error(
+      'Refusing to run seed in production. Set ALLOW_PRODUCTION_SEED=true to override.'
+    )
   }
 }
 

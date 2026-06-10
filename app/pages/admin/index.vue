@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { ColumnDef } from '@tanstack/vue-table'
-import { useAdminActions, type AdminUser } from '~/composables/useAdminActions'
-import CreateUserModal from '~/components/admin/CreateUserModal.vue'
 import BanUserModal from '~/components/admin/BanUserModal.vue'
+import CreateUserModal from '~/components/admin/CreateUserModal.vue'
+import { type AdminUser, useAdminActions } from '~/composables/useAdminActions'
 
 definePageMeta({
   auth: 'protected',
-  middleware: 'admin' as any // eslint-disable-line @typescript-eslint/no-explicit-any
+  middleware: 'admin' as never
 })
 
 useSeoMeta({
@@ -48,23 +48,25 @@ const columns: ColumnDef<AdminUser>[] = [
 ]
 
 // Dropdown actions generator
-const getActions = (row: AdminUser) => [[
-  {
-    label: row.role === 'admin' ? 'Tornar Usuário Comum' : 'Tornar Administrador',
-    icon: row.role === 'admin' ? 'i-lucide-user' : 'i-lucide-shield-check',
-    onSelect: () => changeRole(row, row.role === 'admin' ? 'user' : 'admin')
-  },
-  {
-    label: 'Impersonar Usuário',
-    icon: 'i-lucide-log-in',
-    onSelect: () => impersonateUser(row)
-  },
-  {
-    label: row.banned ? 'Desbanir Usuário' : 'Banir Usuário',
-    icon: row.banned ? 'i-lucide-circle-check' : 'i-lucide-ban',
-    onSelect: () => row.banned ? unbanUser(row) : openBanModal(row)
-  }
-]]
+const getActions = (row: AdminUser) => [
+  [
+    {
+      label: row.role === 'admin' ? 'Tornar Usuário Comum' : 'Tornar Administrador',
+      icon: row.role === 'admin' ? 'i-lucide-user' : 'i-lucide-shield-check',
+      onSelect: () => changeRole(row, row.role === 'admin' ? 'user' : 'admin')
+    },
+    {
+      label: 'Impersonar Usuário',
+      icon: 'i-lucide-log-in',
+      onSelect: () => impersonateUser(row)
+    },
+    {
+      label: row.banned ? 'Desbanir Usuário' : 'Banir Usuário',
+      icon: row.banned ? 'i-lucide-circle-check' : 'i-lucide-ban',
+      onSelect: () => (row.banned ? unbanUser(row) : openBanModal(row))
+    }
+  ]
+]
 
 // Initial fetch
 onMounted(() => {

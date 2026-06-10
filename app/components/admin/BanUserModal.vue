@@ -16,7 +16,10 @@ const props = defineProps<{
   user: AdminUser | null
 }>()
 
-const emit = defineEmits(['update:modelValue', 'banned'])
+const emit = defineEmits<{
+  (e: 'update:modelValue', val: boolean): void
+  (e: 'banned'): void
+}>()
 
 const isOpen = computed({
   get() {

@@ -39,9 +39,13 @@ const options = {
 }
 
 const runFallowHealth = (): FallowHealth => {
-  const result = spawnSync('npx', ['fallow', 'health', '--report-only', '--format', 'json', '--quiet'], {
-    encoding: 'utf8'
-  })
+  const result = spawnSync(
+    'npx',
+    ['fallow', 'health', '--report-only', '--format', 'json', '--quiet'],
+    {
+      encoding: 'utf8'
+    }
+  )
 
   if (result.status !== 0) {
     throw new Error(result.stderr || result.stdout || 'Failed to run fallow health.')
@@ -104,7 +108,7 @@ const files = health.file_scores
   })
   .sort((left, right) => right.icp.total - left.icp.total)
 
-const aboveLimit = files.filter(file => file.icp.total > options.limit)
+const aboveLimit = files.filter((file) => file.icp.total > options.limit)
 
 console.log('CDD report from fallow health')
 console.log(`ICP limit per file: ${options.limit}`)

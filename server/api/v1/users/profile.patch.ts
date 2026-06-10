@@ -1,8 +1,8 @@
-import { updateProfileSchema } from '~~/shared/validation/auth'
 import { userService } from '~~/server/services/user'
 import { auth } from '~~/server/utils/auth'
-import { assertRateLimit } from '~~/server/utils/rate-limit'
 import { useLogger } from '~~/server/utils/logger'
+import { assertRateLimit } from '~~/server/utils/rate-limit'
+import { updateProfileSchema } from '~~/shared/validation/auth'
 
 export default defineEventHandler(async (event) => {
   const loggerInstance = useLogger(event)
@@ -47,8 +47,9 @@ export default defineEventHandler(async (event) => {
     }
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Erro interno ao atualizar perfil'
-    const isValidationError = message === 'Informe pelo menos um campo para atualizar' || 
-                              message.includes('E-mail inválido')
+    const isValidationError =
+      message === 'Informe pelo menos um campo para atualizar' ||
+      message.includes('E-mail inválido')
 
     throw createError({
       statusCode: isValidationError ? 400 : 500,

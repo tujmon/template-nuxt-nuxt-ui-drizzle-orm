@@ -1,9 +1,9 @@
+import { type ChildProcess, spawn } from 'node:child_process'
 import { existsSync } from 'node:fs'
 import { mkdir, readdir, rm } from 'node:fs/promises'
 import { dirname, join, relative, sep } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { spawn, type ChildProcess } from 'node:child_process'
-import { chromium, type Browser, type BrowserContext } from '@playwright/test'
+import { type Browser, type BrowserContext, chromium } from '@playwright/test'
 
 type ScreenshotUser = {
   name: string
@@ -23,7 +23,7 @@ const baseUrl = process.env.SCREENSHOT_BASE_URL || 'http://127.0.0.1:3000'
 const authOrigin = new URL(process.env.BETTER_AUTH_URL || baseUrl).origin
 const shouldStartServer = process.env.SCREENSHOT_START_SERVER !== 'false'
 const routeParams = process.env.SCREENSHOT_ROUTE_PARAMS
-  ? JSON.parse(process.env.SCREENSHOT_ROUTE_PARAMS) as Record<string, string>
+  ? (JSON.parse(process.env.SCREENSHOT_ROUTE_PARAMS) as Record<string, string>)
   : {}
 const viewport = {
   width: Number(process.env.SCREENSHOT_WIDTH || 1440),
@@ -65,7 +65,7 @@ const waitForServer = async () => {
       // Server is still starting.
     }
 
-    await new Promise(resolve => setTimeout(resolve, 500))
+    await new Promise((resolve) => setTimeout(resolve, 500))
   }
 
   throw new Error(`Timed out waiting for ${baseUrl}`)
@@ -119,7 +119,7 @@ const toRoute = (filePath: string) => {
   for (const segment of relativePath
     .replace(/\.vue$/, '')
     .split(sep)
-    .filter(segment => segment !== 'index')) {
+    .filter((segment) => segment !== 'index')) {
     if (segment.startsWith('[') && segment.endsWith(']')) {
       const paramName = segment.slice(1, -1).replace(/\.\.\./, '')
       const paramValue = routeParams[paramName]
@@ -140,42 +140,54 @@ const toRoute = (filePath: string) => {
 
 const scanPages = async (dir: string): Promise<ScreenshotTarget[]> => {
   const entries = await readdir(dir, { withFileTypes: true })
-  const nested = await Promise.all(entries.map(async (entry) => {
-    const fullPath = join(dir, entry.name)
+  const nested = await Promise.all(
+    entries.map(async (entry) => {
+      const fullPath = join(dir, entry.name)
 
-    if (entry.isDirectory()) return scanPages(fullPath)
-    if (!entry.isFile() || !entry.name.endsWith('.vue')) return []
+      if (entry.isDirectory()) return scanPages(fullPath)
+      if (!entry.isFile() || !entry.name.endsWith('.vue')) return []
 
-    const route = toRoute(fullPath)
-    if (!route) return []
+      const route = toRoute(fullPath)
+      if (!route) return []
 
-    return [{
-      route,
-      source: relative(rootDir, fullPath)
-    }]
-  }))
+      return [
+        {
+          route,
+          source: relative(rootDir, fullPath)
+        }
+      ]
+    })
+  )
 
   return nested.flat().sort((a, b) => a.route.localeCompare(b.route))
 }
 
 const safeName = (value: string) => {
   if (value === '/') return 'home'
-  return value.replace(/^\//, '').replace(/[^a-z0-9-]+/gi, '-').toLowerCase()
+  return value
+    .replace(/^\//, '')
+    .replace(/[^a-z0-9-]+/gi, '-')
+    .toLowerCase()
 }
 
 const login = async (context: BrowserContext, user: ScreenshotUser) => {
-  const response = await context.request.post(new URL('/api/auth/sign-in/email', baseUrl).toString(), {
-    headers: {
-      origin: authOrigin
-    },
-    data: {
-      email: user.email,
-      password: user.password
+  const response = await context.request.post(
+    new URL('/api/auth/sign-in/email', baseUrl).toString(),
+    {
+      headers: {
+        origin: authOrigin
+      },
+      data: {
+        email: user.email,
+        password: user.password
+      }
     }
-  })
+  )
 
   if (!response.ok()) {
-    throw new Error(`Failed to sign in "${user.name}" with status ${response.status()}: ${await response.text()}`)
+    throw new Error(
+      `Failed to sign in "${user.name}" with status ${response.status()}: ${await response.text()}`
+    )
   }
 }
 
@@ -245,7 +257,9 @@ const main = async () => {
     }
   }
 
-  console.log(`Saved ${targets.length * (users.length + 1)} screenshots in ${relative(rootDir, outputDir)}`)
+  console.log(
+    `Saved ${targets.length * (users.length + 1)} screenshots in ${relative(rootDir, outputDir)}`
+  )
 }
 
 main().catch((error) => {

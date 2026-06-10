@@ -6,9 +6,12 @@ export default defineNitroPlugin((nitroApp) => {
     // Obtain request-scoped logger to preserve requestId
     const requestLogger = useLogger(event)
 
-    requestLogger.error({
-      message: error.message || 'Unhandled server error',
-      error
-    }, 'Unhandled server-side exception')
+    requestLogger.error(
+      {
+        message: error.message || 'Unhandled server error',
+        error
+      },
+      'Unhandled server-side exception'
+    )
   })
 })

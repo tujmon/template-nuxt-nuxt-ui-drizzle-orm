@@ -1,9 +1,9 @@
-import { describe, it, expect, vi, beforeAll, beforeEach, afterAll } from 'vitest'
-import { runTaskWithGuardrails } from '../../server/utils/scheduler'
-import { db, pool } from '../../server/database/client'
-import { schedulerTask } from '../../server/database/schema/scheduler'
 import { eq } from 'drizzle-orm'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
+import { db, pool } from '../../server/database/client'
+import { schedulerTask } from '../../server/database/schema/scheduler'
+import { runTaskWithGuardrails } from '../../server/utils/scheduler'
 
 describe('Scheduler Utility Test', () => {
   beforeAll(async () => {
@@ -23,7 +23,11 @@ describe('Scheduler Utility Test', () => {
 
   // Helper to fetch task row from database
   const getTaskRow = async (taskName: string) => {
-    const dbRows = await db.select().from(schedulerTask).where(eq(schedulerTask.name, taskName)).limit(1)
+    const dbRows = await db
+      .select()
+      .from(schedulerTask)
+      .where(eq(schedulerTask.name, taskName))
+      .limit(1)
     return dbRows[0]
   }
 
@@ -42,10 +46,10 @@ describe('Scheduler Utility Test', () => {
     // Verify database state has released the lock
     const row = await getTaskRow(taskName)
     expect(row).toBeDefined()
-    expect(row!.lockedAt).toBeNull()
-    expect(row!.lastStatus).toBe('success')
-    expect(row!.lastError).toBeNull()
-    expect(row!.lastDurationMs).toBe(result.durationMs)
+    expect(row?.lockedAt).toBeNull()
+    expect(row?.lastStatus).toBe('success')
+    expect(row?.lastError).toBeNull()
+    expect(row?.lastDurationMs).toBe(result.durationMs)
   })
 
   it('should acquire and release lock on failed run', async () => {
@@ -62,9 +66,9 @@ describe('Scheduler Utility Test', () => {
     // Verify database state has released the lock but registered the error
     const row = await getTaskRow(taskName)
     expect(row).toBeDefined()
-    expect(row!.lockedAt).toBeNull()
-    expect(row!.lastStatus).toBe('failed')
-    expect(row!.lastError).toBe('task_error')
+    expect(row?.lockedAt).toBeNull()
+    expect(row?.lastStatus).toBe('failed')
+    expect(row?.lastError).toBe('task_error')
   })
 
   it('should block concurrent executions of the same task', async () => {

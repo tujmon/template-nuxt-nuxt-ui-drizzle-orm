@@ -9,8 +9,6 @@ describe('Better Auth trusted origins', () => {
   })
 
   it('preserves the configured local development port', () => {
-    expect(getAuthTrustedOrigins('http://localhost:3001')).toEqual([
-      'http://localhost:3001'
-    ])
+    expect(getAuthTrustedOrigins('http://localhost:3001')).toEqual(['http://localhost:3001'])
   })
 })

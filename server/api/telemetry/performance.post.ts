@@ -1,7 +1,7 @@
-import { performanceMeasureSchema } from '~~/shared/validation/performance'
 import { env } from '~~/server/utils/env'
-import { assertRateLimit } from '~~/server/utils/rate-limit'
 import { useLogger } from '~~/server/utils/logger'
+import { assertRateLimit } from '~~/server/utils/rate-limit'
+import { performanceMeasureSchema } from '~~/shared/validation/performance'
 
 export default defineEventHandler(async (event) => {
   const loggerInstance = useLogger(event)

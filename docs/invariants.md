@@ -38,3 +38,20 @@ Estas regras existem para evitar mudanças locais que quebram o desenho global d
 - Scripts CLI podem usar `console` com `/* eslint-disable no-console */` local.
 - Rode `npm run agent:check` antes de finalizar mudanças.
 - Use `npm run cdd:check` quando mexer em lógica, fluxo ou scripts.
+
+## Estrutura e Nomenclatura de Arquivos
+
+- **Componentes Vue:** Devem usar obrigatoriamente **PascalCase** em seus nomes de arquivo (ex: `CreateUserModal.vue`, `StatusPanel.vue`).
+- **Composables e Utils:** Devem usar **camelCase** e seguir o padrão de prefixo `use` para composables (ex: `useAuthSession.ts`, `useAdminActions.ts`).
+- **Rotas de API:** Devem usar a convenção de nomenclatura de arquivos do Nuxt (`server/api/v1/...`).
+
+## Tratamento de Erros no Backend
+
+- **Camada de Serviços:** Serviços não devem acoplar códigos HTTP. Eles devem lançar erros descritivos limpos (`throw new Error('Mensagem descritiva')`).
+- **Controladores (Handlers):** O controlador deve capturar os erros em blocos `try/catch` e traduzi-los em respostas estruturadas usando a função `createError` do H3, definindo o `statusCode` adequado (ex: 400 para erros de validação de negócios, 404 para entidades não encontradas) e a mensagem formatada para o cliente.
+
+## Internacionalização e Idioma
+
+- A interface pública e o painel de administração devem ser mantidos estritamente em **Português (pt-BR)**.
+- Mensagens de validação Zod, avisos de erro, toasts e descrições de tela não devem conter termos em inglês ou outros idiomas de forma arbitrária nas superfícies visíveis.
+

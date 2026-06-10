@@ -1,8 +1,8 @@
-import type { UserRepository } from '../../domain/user/repository'
-import type { UserDomain } from '../../domain/user/entity'
+import { eq } from 'drizzle-orm'
 import { db } from '../../database/client'
 import { user } from '../../database/schema/auth'
-import { eq } from 'drizzle-orm'
+import type { UserDomain } from '../../domain/user/entity'
+import type { UserRepository } from '../../domain/user/repository'
 
 class DrizzleUserRepository implements UserRepository {
   private db = db

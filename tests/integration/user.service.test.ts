@@ -1,8 +1,8 @@
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
-import { describe, it, expect, beforeAll, beforeEach, afterAll, vi } from 'vitest'
-import { UserService } from '../../server/services/user'
+import { afterAll, beforeAll, beforeEach, describe, expect, it, vi } from 'vitest'
 import { db, pool } from '../../server/database/client'
 import { account, session, user, verification } from '../../server/database/schema/auth'
+import { UserService } from '../../server/services/user'
 
 describe('UserService Integration Test', () => {
   let userService: UserService
@@ -11,11 +11,8 @@ describe('UserService Integration Test', () => {
     await migrate(db, { migrationsFolder: './server/database/migrations' })
   })
 
-  beforeEach(() => {
-    userService = new UserService()
-  })
-
   beforeEach(async () => {
+    userService = new UserService()
     await db.delete(account)
     await db.delete(session)
     await db.delete(verification)

@@ -83,3 +83,34 @@ Este documento define os padrões de interface, ações e fluxos do template. Us
   - redirecionar para uma tela útil como `/dashboard`;
   - exibir banner global enquanto ativa;
   - oferecer `Voltar ao admin` para encerrar a sessão impersonada.
+
+## Tokens Semânticos de Estilo
+
+Ao criar ou editar telas e componentes, utilize as classes semânticas mapeadas nos temas e evite paletas cruas (como `slate`, `zinc`, etc.):
+* **Textos:**
+  * `text-default`: Cor de texto padrão para leitura principal.
+  * `text-highlighted`: Alto contraste, para títulos principais (`h1`, `h2`) ou ênfases importantes.
+  * `text-toned`: Cor intermediária, excelente para subtítulos ou itens ativos de navegação.
+  * `text-muted`: Cor atenuada, para textos auxiliares ou descrições.
+  * `text-dimmed`: Texto muito sutil, para legendas ou rótulos secundários.
+* **Fundos (Backgrounds):**
+  * `bg-default`: Cor de fundo da página.
+  * `bg-elevated`: Cor de fundo para cards, modais e containers de conteúdo.
+  * `bg-muted`: Fundo atenuado para banners temporários (ex: impersonation) ou alertas.
+  * `bg-accented`: Fundo de destaque para painéis (ex: lado visual da tela de login).
+* **Bordas:**
+  * `border-muted`: Linhas de separação e bordas padrão.
+  * `border-accented`: Linha de destaque para elementos de foco ou separações de painéis principais.
+
+## Navegação Responsiva (Mobile)
+
+* **Design Flexível:** Todas as telas operacionais devem adaptar-se para mobile. Grades flexíveis (`grid-cols-1 md:grid-cols-2`) devem ser preferidas.
+* **Menu Mobile:** Elementos de navegação em desktop usam a classe `hidden md:flex`. No mobile, implemente um menu hambúrguer ou Drawer utilizando `<UDrawer>` do Nuxt UI v4 para não poluir a interface.
+* **Componentes de Ação:** Ações contextuais de tabelas que usam `UDropdownMenu` continuam funcionando bem no mobile. Botões de ação em topo de tela devem quebrar para a linha de baixo, alinhados à esquerda ou ocupando `w-full` se for um CTA isolado.
+
+## Tratamento de Erros e Feedback de UI
+
+* **Estados de Carregamento:** Formulários e botões de ação que chamam serviços de API devem controlar o estado com `isLoading` e usar a propriedade `:loading` nos botões Nuxt UI correspondentes.
+* **Feedbacks Claros:** Erros de validação e erros do servidor devem ser mapeados em português compreensível pelo usuário.
+* **Exibição:** Utilize `<UAlert>` acima dos botões de ação do formulário para erros que impedem o envio total do formulário, ou mensagens de toast com `color="error"` caso o erro aconteça assincronamente fora do formulário ativo.
+

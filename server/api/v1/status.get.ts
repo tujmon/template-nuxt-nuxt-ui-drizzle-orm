@@ -27,11 +27,7 @@ export default defineEventHandler(async (event) => {
   const updatedAt = new Date().toISOString()
 
   try {
-    const [
-      databaseVersionQuery,
-      maxConnectionsQuery,
-      databaseNameQuery
-    ] = await Promise.all([
+    const [databaseVersionQuery, maxConnectionsQuery, databaseNameQuery] = await Promise.all([
       pool.query<{ server_version: string }>('SHOW server_version;'),
       pool.query<{ max_connections: string }>('SHOW max_connections;'),
       pool.query<{ current_database: string }>('SELECT current_database();')
@@ -45,10 +41,10 @@ export default defineEventHandler(async (event) => {
 
     const database: DatabaseStatus | { status: 'ok' } = env.STATUS_EXPOSE_DETAILS
       ? {
-      status: 'ok',
-      version: firstRow(databaseVersionQuery.rows).server_version,
-      max_connections: Number.parseInt(firstRow(maxConnectionsQuery.rows).max_connections, 10),
-      opened_connections: firstRow(openedConnectionsQuery.rows).count
+          status: 'ok',
+          version: firstRow(databaseVersionQuery.rows).server_version,
+          max_connections: Number.parseInt(firstRow(maxConnectionsQuery.rows).max_connections, 10),
+          opened_connections: firstRow(openedConnectionsQuery.rows).count
         }
       : {
           status: 'ok'

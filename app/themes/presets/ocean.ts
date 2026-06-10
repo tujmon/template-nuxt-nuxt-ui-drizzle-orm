@@ -1,4 +1,4 @@
-import { defaultTheme, type AppTheme } from './default'
+import { type AppTheme, defaultTheme } from './default'
 
 export const oceanTheme = {
   ui: {

@@ -50,7 +50,10 @@ Before creating a new UI pattern, search for an existing one:
 
 ## Theme and layout rules
 
-- Prefer semantic classes: `text-default`, `text-muted`, `text-highlighted`, `bg-default`, `bg-elevated`, `border-muted`.
+- **File Naming:** Vue component files must use **PascalCase** (e.g. `CreateUserModal.vue`), while client-side composables and utils must use **camelCase** (e.g. `useAuthSession.ts`).
+- **DefineEmits:** Always use strictly typed TypeScript function overload signatures for `defineEmits` instead of string arrays.
+- **Form Validation:** Use `UForm` + Zod schemas for validation; avoid manual validation in UI.
+- Prefer semantic classes: `text-default`, `text-muted`, `text-toned`, `text-dimmed`, `text-highlighted`, `bg-default`, `bg-elevated`, `bg-muted`, `bg-accented`, `border-muted`, `border-accented`.
 - Prefer semantic Nuxt UI colors: `primary`, `secondary`, `success`, `info`, `warning`, `error`, `neutral`.
 - Do not hardcode brand palettes in pages or components; centralize theme choices in `app/themes`.
 - Avoid cards inside cards.

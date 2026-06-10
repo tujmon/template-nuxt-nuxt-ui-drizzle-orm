@@ -1,8 +1,8 @@
+import { and, eq, isNull, lt, or } from 'drizzle-orm'
 import { db } from '../database/client'
 import { schedulerTask } from '../database/schema/scheduler'
-import { eq, and, or, isNull, lt } from 'drizzle-orm'
-import { logger } from './logger'
 import { nodeEnv } from './env'
+import { logger } from './logger'
 
 export interface TaskResult<T> {
   success: boolean
@@ -44,7 +44,11 @@ export async function runTaskWithGuardrails<T>(
   try {
     // 2. Concurrency lock check using atomic update
     // Check if task row exists, create if missing
-    const existing = await db.select().from(schedulerTask).where(eq(schedulerTask.name, taskName)).limit(1)
+    const existing = await db
+      .select()
+      .from(schedulerTask)
+      .where(eq(schedulerTask.name, taskName))
+      .limit(1)
     if (existing.length === 0) {
       try {
         await db.insert(schedulerTask).values({
@@ -63,10 +67,7 @@ export async function runTaskWithGuardrails<T>(
       .where(
         and(
           eq(schedulerTask.name, taskName),
-          or(
-            isNull(schedulerTask.lockedAt),
-            lt(schedulerTask.lockedAt, staleTime)
-          )
+          or(isNull(schedulerTask.lockedAt), lt(schedulerTask.lockedAt, staleTime))
         )
       )
       .returning({ name: schedulerTask.name })
@@ -98,7 +99,10 @@ export async function runTaskWithGuardrails<T>(
       })
       .where(eq(schedulerTask.name, taskName))
 
-    logger.info({ taskName, durationMs, data }, `Task completed successfully: ${taskName} in ${durationMs}ms`)
+    logger.info(
+      { taskName, durationMs, data },
+      `Task completed successfully: ${taskName} in ${durationMs}ms`
+    )
     return {
       success: true,
       durationMs,

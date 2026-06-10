@@ -1,5 +1,5 @@
-import { upsertCredentialUser, deleteCredentialUser } from './auth.seed'
-import { buildDemoUser, buildAdminUser } from './factories/user.factory'
+import { deleteCredentialUser, upsertCredentialUser } from './auth.seed'
+import { buildAdminUser, buildDemoUser } from './factories/user.factory'
 import type { SeedClient, SeedConfig, SeedSummary } from './types'
 
 export const seedDemo = async (client: SeedClient, config: SeedConfig): Promise<SeedSummary> => {

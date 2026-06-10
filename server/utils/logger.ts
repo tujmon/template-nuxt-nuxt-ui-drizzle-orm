@@ -1,4 +1,4 @@
-import { createConsola, type ConsolaInstance, type LogObject, type ConsolaReporter } from 'consola'
+import { type ConsolaInstance, type ConsolaReporter, createConsola, type LogObject } from 'consola'
 import type { H3Event } from 'h3'
 import { isProd } from './env'
 
@@ -46,7 +46,7 @@ export const jsonReporter: ConsolaReporter = {
       logEntry.message = logObj.args.join(' ')
     }
 
-    process.stdout.write(JSON.stringify(logEntry) + '\n')
+    process.stdout.write(`${JSON.stringify(logEntry)}\n`)
   }
 }
 
@@ -57,7 +57,7 @@ export const logger: ConsolaInstance = createConsola({
 
 // Request-scoped logger helper to easily attach request context details
 export const useLogger = (event?: H3Event) => {
-  if (!event || !event.context) {
+  if (!event?.context) {
     return logger
   }
 
@@ -65,9 +65,10 @@ export const useLogger = (event?: H3Event) => {
   const userId: unknown = event.context.userId || event.context.session?.user?.id
 
   const formatPayload = (payload: unknown) => {
-    const payloadObj = (typeof payload === 'object' && payload !== null)
-      ? (payload as Record<string, unknown>)
-      : { msg: payload }
+    const payloadObj =
+      typeof payload === 'object' && payload !== null
+        ? (payload as Record<string, unknown>)
+        : { msg: payload }
 
     return {
       requestId,

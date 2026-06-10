@@ -100,7 +100,10 @@ export const upsertCredentialUser = async (
   }
 }
 
-export const deleteCredentialUser = async (client: SeedClient, seedUser: SeedUser): Promise<void> => {
+export const deleteCredentialUser = async (
+  client: SeedClient,
+  seedUser: SeedUser
+): Promise<void> => {
   await client.query('DELETE FROM account WHERE id = $1;', [seedUser.accountId])
   await client.query('DELETE FROM session WHERE user_id = $1;', [seedUser.id])
   await client.query('DELETE FROM "user" WHERE id = $1;', [seedUser.id])

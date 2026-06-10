@@ -6,12 +6,16 @@ import { appThemes } from '../app/themes'
 const rootDir = dirname(fileURLToPath(new URL('../package.json', import.meta.url)))
 const basePort = Number(process.env.SCREENSHOT_THEME_BASE_PORT || 3200)
 const themeNames = process.env.SCREENSHOT_THEMES
-  ? process.env.SCREENSHOT_THEMES.split(',').map(theme => theme.trim()).filter(Boolean)
+  ? process.env.SCREENSHOT_THEMES.split(',')
+      .map((theme) => theme.trim())
+      .filter(Boolean)
   : Object.keys(appThemes)
 
 const runTheme = async (themeName: string, index: number) => {
   if (!(themeName in appThemes)) {
-    throw new Error(`Unknown screenshot theme "${themeName}". Available themes: ${Object.keys(appThemes).join(', ')}`)
+    throw new Error(
+      `Unknown screenshot theme "${themeName}". Available themes: ${Object.keys(appThemes).join(', ')}`
+    )
   }
 
   const port = basePort + index

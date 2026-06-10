@@ -12,7 +12,7 @@ export interface AdminUser {
 
 export const useAdminActions = () => {
   const toast = useToast()
-  
+
   const users = ref<AdminUser[]>([])
   const totalUsers = ref(0)
   const currentPage = ref(1)
@@ -38,7 +38,11 @@ export const useAdminActions = () => {
       })
 
       if (error) {
-        toast.add({ title: 'Erro ao carregar usuários', description: error.message, color: 'error' })
+        toast.add({
+          title: 'Erro ao carregar usuários',
+          description: error.message,
+          color: 'error'
+        })
       } else if (data) {
         users.value = data.users as unknown as AdminUser[]
         totalUsers.value = data.total ?? data.users.length
@@ -61,11 +65,18 @@ export const useAdminActions = () => {
 
   const changeRole = async (user: AdminUser, newRole: string) => {
     try {
-      const { error } = await authClient.admin.setRole({ userId: user.id, role: newRole as 'user' | 'admin' })
+      const { error } = await authClient.admin.setRole({
+        userId: user.id,
+        role: newRole as 'user' | 'admin'
+      })
       if (error) {
         toast.add({ title: 'Erro ao alterar cargo', description: error.message, color: 'error' })
       } else {
-        toast.add({ title: 'Cargo alterado com sucesso', description: `O usuário ${user.name} agora é ${newRole}.`, color: 'success' })
+        toast.add({
+          title: 'Cargo alterado com sucesso',
+          description: `O usuário ${user.name} agora é ${newRole}.`,
+          color: 'success'
+        })
         await fetchUsers()
       }
     } catch (err: unknown) {
@@ -79,7 +90,11 @@ export const useAdminActions = () => {
       if (error) {
         toast.add({ title: 'Erro ao desbanir usuário', description: error.message, color: 'error' })
       } else {
-        toast.add({ title: 'Usuário desbanido', description: `O acesso do usuário ${user.name} foi restabelecido.`, color: 'success' })
+        toast.add({
+          title: 'Usuário desbanido',
+          description: `O acesso do usuário ${user.name} foi restabelecido.`,
+          color: 'success'
+        })
         await fetchUsers()
       }
     } catch (err: unknown) {
@@ -91,7 +106,11 @@ export const useAdminActions = () => {
     try {
       const { error } = await authClient.admin.impersonateUser({ userId: user.id })
       if (error) {
-        toast.add({ title: 'Erro ao impersonar usuário', description: error.message, color: 'error' })
+        toast.add({
+          title: 'Erro ao impersonar usuário',
+          description: error.message,
+          color: 'error'
+        })
       } else {
         toast.add({
           title: 'Impersonation iniciada',

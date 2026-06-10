@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { usePerformanceMeasure } from '~/composables/performance-measure'
-import StatusPanel from '~/components/dashboard/StatusPanel.vue'
 import ActionPanel from '~/components/dashboard/ActionPanel.vue'
+import StatusPanel from '~/components/dashboard/StatusPanel.vue'
+import { usePerformanceMeasure } from '~/composables/performance-measure'
 
 definePageMeta({
   auth: 'protected'
@@ -20,11 +20,15 @@ const currentStatus = ref('Ativo')
 const clickCount = ref(0)
 
 const simulateHeavyTask = async () => {
-  await performanceMeasure.trackAsync('simulate-dashboard-heavy-task', async () => {
-    // Simulate some API request delay / calculations
-    await new Promise(resolve => setTimeout(resolve, 450))
-    clickCount.value += 10
-  }, 300) // Threshold of 300ms will trigger a warning alert in console since task takes ~450ms
+  await performanceMeasure.trackAsync(
+    'simulate-dashboard-heavy-task',
+    async () => {
+      // Simulate some API request delay / calculations
+      await new Promise((resolve) => setTimeout(resolve, 450))
+      clickCount.value += 10
+    },
+    300
+  ) // Threshold of 300ms will trigger a warning alert in console since task takes ~450ms
 }
 
 const handleIncrement = () => {

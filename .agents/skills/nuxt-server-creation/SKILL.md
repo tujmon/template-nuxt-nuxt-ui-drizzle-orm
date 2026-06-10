@@ -37,11 +37,11 @@ Before creating a new server pattern, search for an existing one:
 ## API checklist
 
 - Use `readBody`, `getQuery`, or route params only at the handler boundary.
-- Validate inputs with shared Zod schemas and return HTTP 400 with formatted validation errors.
+- Validate inputs with shared Zod schemas (written strictly in **Português (pt-BR)**) and return HTTP 400 with formatted validation errors.
 - Use `auth.api.getSession({ headers: toWebRequest(event).headers })` for authenticated endpoints.
 - Never trust a user id from the client when the action targets the current user; use `session.user.id`.
 - Use `assertRateLimit` on public or sensitive endpoints.
-- Throw `createError({ statusCode, message })`; prefer `message` over `statusMessage`.
+- **Error Handling:** Services must throw clean description-only errors (`throw new Error('clean message')`). Handlers must catch service errors, assign appropriate HTTP status codes (e.g. 400, 404), and throw `createError({ statusCode, message })` using clean user-facing messages. Prefer `message` over `statusMessage`.
 - Do not import Drizzle schema or `db` directly in normal API handlers.
 
 ## Database checklist

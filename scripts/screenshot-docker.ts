@@ -13,9 +13,11 @@ const baseUrl = process.env.SCREENSHOT_DOCKER_BASE_URL || `http://127.0.0.1:${ap
 const statusUrl = new URL('/api/v1/status', baseUrl).toString()
 const useThemes = process.argv.includes('--themes')
 const themeNames = useThemes
-  ? (process.env.SCREENSHOT_THEMES
-      ? process.env.SCREENSHOT_THEMES.split(',').map(theme => theme.trim()).filter(Boolean)
-      : Object.keys(appThemes))
+  ? process.env.SCREENSHOT_THEMES
+    ? process.env.SCREENSHOT_THEMES.split(',')
+        .map((theme) => theme.trim())
+        .filter(Boolean)
+    : Object.keys(appThemes)
   : [process.env.NUXT_UI_THEME || 'default']
 
 const compose = (...args: string[]) => [
@@ -31,8 +33,13 @@ const compose = (...args: string[]) => [
 const run = async (command: string[], env: NodeJS.ProcessEnv = process.env) => {
   console.log(`$ ${command.join(' ')}`)
 
+  const [cmd, ...args] = command
+  if (!cmd) {
+    throw new Error('Command array cannot be empty')
+  }
+
   await new Promise<void>((resolve, reject) => {
-    const child = spawn(command[0]!, command.slice(1), {
+    const child = spawn(cmd, args, {
       cwd: rootDir,
       env,
       stdio: 'inherit'
@@ -49,11 +56,16 @@ const run = async (command: string[], env: NodeJS.ProcessEnv = process.env) => {
 }
 
 const runQuiet = (command: string[], env: NodeJS.ProcessEnv = process.env) => {
-  return spawnSync(command[0]!, command.slice(1), {
-    cwd: rootDir,
-    env,
-    stdio: 'ignore'
-  }).status === 0
+  const [cmd, ...args] = command
+  if (!cmd) return false
+
+  return (
+    spawnSync(cmd, args, {
+      cwd: rootDir,
+      env,
+      stdio: 'ignore'
+    }).status === 0
+  )
 }
 
 const waitForStatus = async () => {
@@ -67,7 +79,7 @@ const waitForStatus = async () => {
       // App is still starting.
     }
 
-    await new Promise(resolve => setTimeout(resolve, 1_000))
+    await new Promise((resolve) => setTimeout(resolve, 1_000))
   }
 
   throw new Error(`Timed out waiting for ${statusUrl}`)
@@ -75,7 +87,9 @@ const waitForStatus = async () => {
 
 const validateTheme = (themeName: string) => {
   if (!(themeName in appThemes)) {
-    throw new Error(`Unknown screenshot theme "${themeName}". Available themes: ${Object.keys(appThemes).join(', ')}`)
+    throw new Error(
+      `Unknown screenshot theme "${themeName}". Available themes: ${Object.keys(appThemes).join(', ')}`
+    )
   }
 }
 

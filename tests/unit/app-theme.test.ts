@@ -1,25 +1,13 @@
 import { describe, expect, it } from 'vitest'
 import { appThemes, getAppTheme } from '../../app/themes'
 
-const requiredColors = [
-  'primary',
-  'secondary',
-  'success',
-  'info',
-  'warning',
-  'error',
-  'neutral'
-]
+const requiredColors = ['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']
 
 describe('app themes', () => {
   it('registers named Nuxt UI themes', () => {
-    expect(Object.keys(appThemes)).toEqual(expect.arrayContaining([
-      'default',
-      'ocean',
-      'forest',
-      'sunset',
-      'mono'
-    ]))
+    expect(Object.keys(appThemes)).toEqual(
+      expect.arrayContaining(['default', 'ocean', 'forest', 'sunset', 'mono'])
+    )
   })
 
   it('keeps every theme compatible with Nuxt UI semantic colors', () => {

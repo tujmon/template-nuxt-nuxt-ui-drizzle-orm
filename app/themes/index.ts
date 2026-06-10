@@ -1,4 +1,4 @@
-import { defaultTheme, type AppTheme } from './presets/default'
+import { type AppTheme, defaultTheme } from './presets/default'
 import { forestTheme } from './presets/forest'
 import { monoTheme } from './presets/mono'
 import { oceanTheme } from './presets/ocean'
@@ -20,7 +20,9 @@ export const isAppThemeName = (value: string): value is AppThemeName => {
 
 export const getAppTheme = (name = 'default') => {
   if (!isAppThemeName(name)) {
-    throw new Error(`Unknown app theme "${name}". Available themes: ${Object.keys(appThemes).join(', ')}`)
+    throw new Error(
+      `Unknown app theme "${name}". Available themes: ${Object.keys(appThemes).join(', ')}`
+    )
   }
 
   return appThemes[name]

@@ -1,3 +1,1 @@
-export const getAuthTrustedOrigins = (authUrl: string) => [
-  new URL(authUrl).origin
-]
+export const getAuthTrustedOrigins = (authUrl: string) => [new URL(authUrl).origin]

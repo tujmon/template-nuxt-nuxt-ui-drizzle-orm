@@ -1,7 +1,7 @@
 import { parseSeedArgs, printSeedSummary } from './cli'
 import { createSeedPool, runInTransaction } from './database'
-import { getSeedConfig, loadSeedEnv } from './env'
 import { resetDemo, seedDemo } from './demo.seed'
+import { getSeedConfig, loadSeedEnv } from './env'
 import { seedSystem } from './system.seed'
 import type { SeedClient, SeedConfig, SeedOptions, SeedSummary } from './types'
 
@@ -34,7 +34,7 @@ const config = getSeedConfig()
 const pool = createSeedPool(config.databaseUrl)
 
 try {
-  const summaries = await runInTransaction(pool, client => runSeeds(client, config, options))
+  const summaries = await runInTransaction(pool, (client) => runSeeds(client, config, options))
   printSeedSummary(summaries)
 } finally {
   await pool.end()
