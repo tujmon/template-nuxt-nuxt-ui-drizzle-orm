@@ -9,7 +9,7 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Entrar — Nuxt 3 Full-Stack Template'
+  title: 'Entrar — Nuxt 4 Full-Stack Template'
 })
 
 const router = useRouter()

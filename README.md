@@ -1,10 +1,10 @@
-# Nuxt 3 Full-Stack Template
+# Nuxt 4 Full-Stack Template
 
-Template opinativo com Nuxt 3, Nuxt UI, Drizzle ORM, PostgreSQL, Better Auth, Zod, Vitest e Docker Compose.
+Template opinativo com Nuxt 4, Nuxt UI, Drizzle ORM, PostgreSQL, Better Auth, Zod, Vitest e Docker Compose.
 
 ## Stack
 
-- Nuxt 3 + Vue 3
+- Nuxt 4 + Vue 3
 - Nuxt UI
 - Better Auth com adapter Drizzle
 - PostgreSQL

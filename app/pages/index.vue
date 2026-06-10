@@ -4,7 +4,7 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Início — Nuxt 3 Full-Stack Template',
+  title: 'Início — Nuxt 4 Full-Stack Template',
   description:
     'Template opinativo com Nuxt UI, Drizzle ORM, Better-Auth e Zod. Projetado para segurança, velocidade e tipagem estrita de ponta a ponta.'
 })
@@ -15,7 +15,7 @@ useSeoMeta({
     <!-- Hero Section -->
     <div class="text-center py-12 space-y-4">
       <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
-        Nuxt 3 Boilerplate
+        Nuxt 4 Boilerplate
       </h1>
       <p class="text-lg text-muted max-w-2xl mx-auto">
         Template opinativo com Nuxt UI, Drizzle ORM, Better-Auth e Zod. Projetado para segurança, velocidade e tipagem estrita de ponta a ponta.

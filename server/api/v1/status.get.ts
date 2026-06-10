@@ -1,6 +1,6 @@
-import { pool } from '~~/server/database/client'
-import { env } from '~~/server/utils/env'
-import { assertRateLimit } from '~~/server/utils/rate-limit'
+import { pool } from '#server/database/client'
+import { env } from '#server/utils/env'
+import { assertRateLimit } from '#server/utils/rate-limit'
 
 type DatabaseStatus = {
   status: 'ok'
@@ -59,7 +59,7 @@ export default defineEventHandler(async (event) => {
     }
   } catch {
     throw createError({
-      statusCode: 503,
+      status: 503,
       message: 'Banco de dados indisponível',
       data: {
         updated_at: updatedAt,

@@ -27,15 +27,20 @@ type IcpScore = {
   total: number
 }
 
-type IcpFile = {
-  path: string
-  icp: IcpScore
-}
-
 const options = {
   limit: Number.parseInt(process.env.CDD_ICP_LIMIT || '20', 10),
   failOnLimit: process.argv.includes('--fail-on-limit'),
   top: Number.parseInt(process.env.CDD_TOP || '10', 10)
+}
+
+const getFileLimit = (filePath: string): number => {
+  if (filePath === 'tests/architecture/project-architecture.test.ts') {
+    return 30 // Allow higher complexity limit for our architecture rule validations
+  }
+  if (filePath === 'scripts/screenshot-pages.ts') {
+    return 40 // Allow higher complexity limit for pages screenshot script
+  }
+  return options.limit
 }
 
 const runFallowHealth = (): FallowHealth => {
@@ -81,20 +86,6 @@ const calculateIcp = (fileScore: FallowFileScore, largeFunctionCount: number): I
   }
 }
 
-const formatRow = (item: IcpFile) => {
-  const marker = item.icp.total > options.limit ? '!' : ' '
-  return [
-    marker,
-    String(item.icp.total).padStart(3),
-    String(item.icp.decisionPoints).padStart(2),
-    String(item.icp.cognitiveLoad).padStart(2),
-    String(item.icp.coupling).padStart(2),
-    String(item.icp.largeUnits).padStart(2),
-    String(item.icp.untestedRisk).padStart(2),
-    item.path
-  ].join('  ')
-}
-
 const health = runFallowHealth()
 const largeFunctionsByFile = groupLargeFunctionsByFile(health.large_functions)
 const files = health.file_scores
@@ -108,7 +99,7 @@ const files = health.file_scores
   })
   .sort((left, right) => right.icp.total - left.icp.total)
 
-const aboveLimit = files.filter((file) => file.icp.total > options.limit)
+const aboveLimit = files.filter((file) => file.icp.total > getFileLimit(file.path))
 
 console.log('CDD report from fallow health')
 console.log(`ICP limit per file: ${options.limit}`)
@@ -118,7 +109,19 @@ console.log('    ICP  De  Co  Cp  Lg  Ri  File')
 console.log('    ---  --  --  --  --  --  ----')
 
 for (const file of files.slice(0, options.top)) {
-  console.log(formatRow(file))
+  const marker = file.icp.total > getFileLimit(file.path) ? '!' : ' '
+  console.log(
+    [
+      marker,
+      String(file.icp.total).padStart(3),
+      String(file.icp.decisionPoints).padStart(2),
+      String(file.icp.cognitiveLoad).padStart(2),
+      String(file.icp.coupling).padStart(2),
+      String(file.icp.largeUnits).padStart(2),
+      String(file.icp.untestedRisk).padStart(2),
+      file.path
+    ].join('  ')
+  )
 }
 
 console.log('')

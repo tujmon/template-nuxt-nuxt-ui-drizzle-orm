@@ -50,7 +50,10 @@ describe('project architecture guardrails', () => {
       .filter((filePath) => !filePath.startsWith('server/api/auth/'))
       .filter((filePath) => {
         const contents = readProjectFile(filePath)
-        return !contents.includes('shared/validation') || !/(safeParse|parse)\(/.test(contents)
+        return (
+          !contents.includes('shared/validation') ||
+          !/(safeParse|parse|readValidatedBody)\(/.test(contents)
+        )
       })
 
     expect(mutatingRouteViolations).toEqual([])
@@ -176,5 +179,36 @@ describe('project architecture guardrails', () => {
     })
 
     expect(missingVariables).toEqual([])
+  })
+
+  it('asserts all references specify an onDelete option in schema files', () => {
+    const schemaFiles = listFiles('server/database/schema').filter(
+      (filePath) => filePath.endsWith('.ts') && filePath !== 'server/database/schema/index.ts'
+    )
+
+    const violations = schemaFiles.filter((filePath) => {
+      const contents = readProjectFile(filePath)
+      let index = 0
+      while (true) {
+        index = contents.indexOf('.references(', index)
+        if (index === -1) break
+
+        let openParens = 1
+        let i = index + '.references('.length
+        while (openParens > 0 && i < contents.length) {
+          if (contents[i] === '(') openParens++
+          else if (contents[i] === ')') openParens--
+          i++
+        }
+        const block = contents.substring(index, i)
+        if (!block.includes('onDelete:')) {
+          return true
+        }
+        index = i
+      }
+      return false
+    })
+
+    expect(violations).toEqual([])
   })
 })

@@ -8,7 +8,7 @@ definePageMeta({
 })
 
 useSeoMeta({
-  title: 'Dashboard — Nuxt 3 Full-Stack Template',
+  title: 'Dashboard — Nuxt 4 Full-Stack Template',
   robots: 'noindex, nofollow'
 })
 

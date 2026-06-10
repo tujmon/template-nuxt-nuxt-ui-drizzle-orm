@@ -1,7 +1,7 @@
-import { env } from '~~/server/utils/env'
-import { useLogger } from '~~/server/utils/logger'
-import { assertRateLimit } from '~~/server/utils/rate-limit'
-import { performanceMeasureSchema } from '~~/shared/validation/performance'
+import { env } from '#server/utils/env'
+import { useLogger } from '#server/utils/logger'
+import { assertRateLimit } from '#server/utils/rate-limit'
+import { performanceMeasureSchema } from '#shared/validation/performance'
 
 export default defineEventHandler(async (event) => {
   const loggerInstance = useLogger(event)
@@ -11,21 +11,22 @@ export default defineEventHandler(async (event) => {
     maxRequests: env.TELEMETRY_RATE_LIMIT_MAX_REQUESTS
   })
 
-  const body = await readBody(event)
-  const result = performanceMeasureSchema.safeParse(body)
-
-  if (!result.success) {
-    loggerInstance.warn({ errors: result.error.format() }, 'Invalid telemetry payload received')
-    throw createError({
-      statusCode: 400,
-      message: 'Métrica de performance inválida',
-      data: result.error.format()
-    })
-  }
+  const body = await readValidatedBody(event, (value) => {
+    const result = performanceMeasureSchema.safeParse(value)
+    if (!result.success) {
+      loggerInstance.warn({ errors: result.error.format() }, 'Invalid telemetry payload received')
+      throw createError({
+        status: 400,
+        message: 'Métrica de performance inválida',
+        data: result.error.format()
+      })
+    }
+    return result.data
+  })
 
   loggerInstance.info(
-    { name: result.data.name, duration: result.data.duration },
-    `Performance metric received: ${result.data.name}`
+    { name: body.name, duration: body.duration },
+    `Performance metric received: ${body.name}`
   )
 
   return {

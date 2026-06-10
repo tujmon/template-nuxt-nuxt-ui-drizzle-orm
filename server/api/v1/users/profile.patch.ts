@@ -1,8 +1,8 @@
-import { userService } from '~~/server/services/user'
-import { auth } from '~~/server/utils/auth'
-import { useLogger } from '~~/server/utils/logger'
-import { assertRateLimit } from '~~/server/utils/rate-limit'
-import { updateProfileSchema } from '~~/shared/validation/auth'
+import { userService } from '#server/services/user'
+import { auth } from '#server/utils/auth'
+import { useLogger } from '#server/utils/logger'
+import { assertRateLimit } from '#server/utils/rate-limit'
+import { updateProfileSchema } from '#shared/validation/auth'
 
 export default defineEventHandler(async (event) => {
   const loggerInstance = useLogger(event)
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
 
   if (!session) {
     throw createError({
-      statusCode: 401,
+      status: 401,
       message: 'Autenticação necessária'
     })
   }
@@ -25,21 +25,22 @@ export default defineEventHandler(async (event) => {
   // Set userId in event context so middleware response logger can access it
   event.context.userId = session.user.id
 
-  const body = await readBody(event)
-  const result = updateProfileSchema.safeParse(body)
-
-  if (!result.success) {
-    loggerInstance.warn({ errors: result.error.format() }, 'Validation failed on profile update')
-    throw createError({
-      statusCode: 400,
-      message: 'Dados de entrada inválidos',
-      data: result.error.format()
-    })
-  }
+  const body = await readValidatedBody(event, (value) => {
+    const result = updateProfileSchema.safeParse(value)
+    if (!result.success) {
+      loggerInstance.warn({ errors: result.error.format() }, 'Validation failed on profile update')
+      throw createError({
+        status: 400,
+        message: 'Dados de entrada inválidos',
+        data: result.error.format()
+      })
+    }
+    return result.data
+  })
 
   try {
-    const updatedUser = await userService.updateProfile(session.user.id, result.data)
-    loggerInstance.info({ updatedFields: Object.keys(result.data) }, 'Profile updated successfully')
+    const updatedUser = await userService.updateProfile(session.user.id, body)
+    loggerInstance.info({ updatedFields: Object.keys(body) }, 'Profile updated successfully')
 
     return {
       success: true,
@@ -52,7 +53,7 @@ export default defineEventHandler(async (event) => {
       message.includes('E-mail inválido')
 
     throw createError({
-      statusCode: isValidationError ? 400 : 500,
+      status: isValidationError ? 400 : 500,
       message
     })
   }

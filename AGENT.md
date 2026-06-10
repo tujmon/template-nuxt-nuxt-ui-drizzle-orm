@@ -1,6 +1,6 @@
 # Template Nuxt Full-Stack
 
-Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, Drizzle ORM, Better Auth, Zod, Vitest e Docker Compose.
+Este arquivo centraliza os padrões do template Nuxt 4 com Nuxt UI, PostgreSQL, Drizzle ORM, Better Auth, Zod, Vitest e Docker Compose.
 
 ## Documentação Principal
 - [README.md](README.md): setup, scripts, rotas, testes e fluxo de desenvolvimento.
@@ -11,6 +11,7 @@ Este arquivo centraliza os padrões do template Nuxt 3 com Nuxt UI, PostgreSQL, 
 - [docs/invariants.md](docs/invariants.md): regras que não devem ser quebradas.
 - [docs/agent-recipes.md](docs/agent-recipes.md): receitas para tarefas comuns.
 - [docs/ui-standards.md](docs/ui-standards.md): padrões de interface, ações, botões, modais, feedback e fluxos.
+- [docs/servicos-externos.md](docs/servicos-externos.md): topologia, configuração e execução de serviços externos (banco, Redis, S3, e-mail, IA).
 - [.agents/skills/nuxt-server-creation/SKILL.md](.agents/skills/nuxt-server-creation/SKILL.md): skill para criação server-side, APIs, domínio, banco, seeds e testes.
 - [.agents/skills/nuxt-ui-creation/SKILL.md](.agents/skills/nuxt-ui-creation/SKILL.md): skill para criação de páginas, componentes, fluxos e temas com Nuxt UI 4.
 
