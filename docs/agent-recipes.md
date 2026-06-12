@@ -48,11 +48,19 @@ Receitas rápidas para manter agentes de IA dentro dos padrões do template.
 - Para UI, use `.agents/skills/nuxt-ui-creation/SKILL.md`.
 - Para uma feature full-stack, use as duas e valide o contrato entre formulário, endpoint e service.
 
-## Antes De Finalizar
+## Antes De Finalizar e Entregar
 
-```bash
-npm run agent:check
-```
+1. **Rode a suite completa de testes e validações:**
+   ```bash
+   npm run agent:check
+   ```
+   *Atenção:* Você **nunca deve ignorar falhas** no console ou mentir em relatórios. Se qualquer teste falhar (`FAIL`), você deve investigar e corrigir antes de declarar sucesso.
+
+2. **Escreva Asserções Fortes em Testes de Concorrência:**
+   - Em testes de concorrência, não verifique apenas se o estado final é válido (ex: saldo >= 0).
+   - Valide se o número exato de transações esperadas passou e falhou (ex: `expect(fulfilled.length).toBe(1)` se apenas uma ordem deveria executar).
+   - Valide se a integridade dos dados finais corresponde exatamente às operações executadas:
+     `expect(saldoInicial - (quantidadeDeSucessos * custoUnitario)).toBe(saldoFinal)`.
 
 Se o banco local de teste não estiver ativo:
 

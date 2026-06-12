@@ -15,8 +15,12 @@ Este documento define os padrões de interface, ações e fluxos do template. Us
 
 - Troque o tema de build com `NUXT_UI_THEME=default npm run dev`, `NUXT_UI_THEME=ocean npm run build` ou qualquer preset registrado em `app/themes/index.ts`.
 - Valide os temas registrados com `npm run screenshots:themes`; as imagens ficam em `screenshots/themes/<tema>/`.
-- Para criar um tema, copie um preset em `app/themes/presets/`, exporte-o em `app/themes/index.ts` e altere apenas tokens semânticos (`primary`, `secondary`, `neutral`, etc.) e overrides globais de componentes.
-- Use palettes existentes do Tailwind quando possível. Para uma cor de marca própria, declare as 11 shades em `app/assets/css/main.css` usando `@theme static` e depois referencie o nome da cor no preset.
+- **Criação de Temas Baseados em Design Systems (ex: `docs/design.md`):**
+  - *Proibição de Estilos Ad-Hoc:* Nunca hardcodeie cores de marcas (ex: `#7132f5`) ou fontes arbitrárias diretamente nos arquivos `.vue` usando classes utilitárias ou `style="..."`. Toda identidade visual deve ser abstraída pelo tema.
+  - *Criação do Preset:* Copie um arquivo de preset existente em `app/themes/presets/`, registre-o em `app/themes/index.ts` e configure os tokens semânticos de cores e fontes apropriados.
+  - *Cores Customizadas:* Se a marca usa cores hexadecimais exclusivas, declare as 11 shades (de 50 a 950) dessa cor no arquivo `app/assets/css/main.css` utilizando a diretiva `@theme static` do Tailwind v4 (ex: `--color-brand-purple-500: #7132f5`) e, em seguida, aponte a chave `primary` do seu preset para essa cor declarada (ex: `primary: 'brand-purple'`).
+  - *Fontes Customizadas:* Defina fontes específicas do design system configurando o `@nuxt/fonts` no `nuxt.config.ts` ou injetando as variáveis CSS de fontes no `app/assets/css/main.css`. Configure o preset ou as classes globais para aplicar as famílias tipográficas herdadas (`font-sans`, `font-serif`, etc.) conforme o visual esperado.
+  - *Arredondamento e Componentes:* Para aplicar raios de borda personalizados (ex: botões com no máximo 12px de raio), customize a propriedade correspondente no preset usando os slots do Nuxt UI para botões ou altere as variáveis de raio correspondentes no CSS do tema.
 - Componentes e páginas não devem importar presets diretamente; eles consomem o tema por classes semânticas e props do Nuxt UI.
 
 ## Estrutura de Página

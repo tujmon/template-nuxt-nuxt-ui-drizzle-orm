@@ -32,7 +32,11 @@ Estas regras existem para evitar mudanças locais que quebram o desenho global d
 - Dados obrigatórios ficam em `system.seed.ts`; dados fictícios ficam em `demo.seed.ts`.
 - Usuários Better Auth devem usar `hashPassword` de `better-auth/crypto`.
 - **Integridade de Chaves Estrangeiras:** Toda nova chave estrangeira (FK) declarada em esquemas do Drizzle deve obrigatoriamente especificar o comportamento `onDelete` (use `'cascade'` para relacionamentos fortemente dependentes ou `'set null'`/`'restrict'` quando apropriado). Nunca deixe o comportamento padrão implícito do banco.
-- **Transações em Lógica de Negócios:** Múltiplas mutações ou rollups acumulados no banco de dados devem ocorrer de forma atômica no banco utilizando o helper `runInTransaction` de `server/database/transaction.ts`.
+- **Transações e Concorrência (Race Conditions):** Múltiplas mutações ou rollups acumulados no banco de dados devem ocorrer de forma atômica utilizando o helper `runInTransaction` de `server/database/transaction.ts`. Toda operação financeira ou de alteração de saldo/estoque sensível a concorrência **deve obrigatoriamente** implementar proteção contra condições de corrida:
+    - *Evite Stale Reads:* Nunca consulte saldos ou limites fora de uma transação e use esse valor para calcular o novo saldo dentro dela. Toda consulta e validação de saldo deve ser feita dentro do bloco da transação ativa (`tx`).
+    - *Pessimistic Locking:* Para ler um registro que será atualizado no final da transação, utilize bloqueio de linha (ex: `.for('update')` no select do Drizzle) para serializar o acesso.
+    - *Optimistic Locking:* Preferencialmente, execute atualizações condicionais atômicas (ex: `update ... set saldo = saldo - valor where id = x and saldo >= valor`) e valide se o número de linhas afetadas é maior que 0 usando `.returning()`.
+    - *Database Constraints:* Defina restrições no banco de dados (ex: `CHECK (saldo_usd >= 0)`) sempre que possível, como última linha de defesa contra saldos negativos ou estados inconsistentes.
 
 ## Controle de Acesso e Permissões por Recurso
 
