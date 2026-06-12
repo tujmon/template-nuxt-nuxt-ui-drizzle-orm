@@ -55,6 +55,7 @@ Este documento define os padrões de interface, ações e fluxos do template. Us
 - A primeira ação do menu deve ser a ação de fluxo comum; ações destrutivas ficam depois.
 - Use badges para status e roles. Status ativos usam `success`; bloqueios/banimentos usam `error`.
 - Filtros ficam no header do card da tabela. Contadores e metadados ficam à direita.
+- **Tratamento de Dados Vazios/Opcionais**: Qualquer dado opcional exibido em tabelas ou listas deve possuir um fallback visual limpo (ex: `row.company || '—'` ou `row.phone || 'N/A'`) no template Vue, evitando exibir células em branco ou strings vazias que prejudiquem a estética da interface.
 
 ## Modais
 

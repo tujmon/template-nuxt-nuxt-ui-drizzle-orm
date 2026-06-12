@@ -24,7 +24,10 @@ Este diretório contém os testes automatizados da aplicação usando **Vitest**
 - Crie testes de rotas em `tests/e2e/`.
 - Use `setup` e `fetch` de `@nuxt/test-utils/e2e` para subir um servidor Nuxt temporário.
 - Cubra status code, payload JSON e validação Zod dos endpoints.
-- Para endpoints autenticados, cubra pelo menos a rejeição 401 e teste a lógica persistente no service enquanto não houver helper estável de sessão HTTP.
+- Para endpoints autenticados, teste a rejeição 401. Para testar o fluxo autenticado (200 OK) sem suporte a cookies na biblioteca E2E padrão:
+  1. Use o client do banco (`db`) no próprio bloco de testes para cadastrar um usuário mock de forma síncrona.
+  2. Simule a sessão HTTP injetando dados ou crie cookies válidos simulando a assinatura que o Better Auth espera no cabeçalho `Cookie` do `fetch()`, ou mocke o comportamento de `requireUserSession` nas configurações do Vitest usando `vi.mock()`.
+  3. Garanta que o service subjacente de validação de permissões do usuário seja coberto exaustivamente nos testes de integração (`tests/integration/`).
 
 ## Testes De Arquitetura
 
