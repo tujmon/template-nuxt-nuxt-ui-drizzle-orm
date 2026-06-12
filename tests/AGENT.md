@@ -28,6 +28,9 @@ Este diretório contém os testes automatizados da aplicação usando **Vitest**
   1. Use o client do banco (`db`) no próprio bloco de testes para cadastrar um usuário mock de forma síncrona.
   2. Simule a sessão HTTP injetando dados ou crie cookies válidos simulando a assinatura que o Better Auth espera no cabeçalho `Cookie` do `fetch()`, ou mocke o comportamento de `requireUserSession` nas configurações do Vitest usando `vi.mock()`.
   3. Garanta que o service subjacente de validação de permissões do usuário seja coberto exaustivamente nos testes de integração (`tests/integration/`).
+- **Problemas de Resolução ESM/Vitest com Better Auth**:
+  - Em ambientes de teste E2E do Nuxt, o Vitest pode falhar com erros de importação/resolução de módulos relacionados ao `@better-fetch/fetch` ou pacotes internos do Better Auth.
+  - Para contornar e diagnosticar isso, garanta que dependências sensíveis a ESM não sejam re-processadas pelo Vite definindo a opção `ssr.noExternal` ou `deps.optimizer` no [vitest.config.ts](vitest.config.ts) do projeto, ou opte por validar a integridade lógica com testes de integração focados nos services em vez de testes de requisição HTTP diretos.
 
 ## Testes De Arquitetura
 

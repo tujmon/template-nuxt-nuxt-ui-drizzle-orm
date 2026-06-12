@@ -48,6 +48,9 @@ Este documento define os padrões de interface, ações e fluxos do template. Us
 - Formulários de auth usam CTA `block` porque a tela é estreita e focada.
 - Placeholders devem ser exemplos de formato, não instruções longas.
 - Erros de formulário aparecem acima do formulário com `UAlert`.
+- **Particularidades do Nuxt UI v4**:
+  - **UCheckbox**: Não use a propriedade `:value` para fazer binding de valores booleanos diretos no `UCheckbox`. Faça o binding utilizando apenas `v-model` diretamente na variável booleana reativa.
+  - **UTextarea**: Evite associar valores do tipo `null` à propriedade `v-model` do `<UTextarea>`. Caso o dado retornado pelo banco de dados possa ser nulo (`string | null`), utilize um proxy (como um valor computado ou uma string vazia como fallback: `v-model="form.notes"`) no estado local do formulário para evitar warnings e erros de interface.
 
 ## Tabelas E Listas
 
